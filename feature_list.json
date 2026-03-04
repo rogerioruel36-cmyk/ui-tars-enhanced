@@ -70,7 +70,7 @@
       "description": "智能元素定位、复杂表单处理、文件上传下载、滚动控制、截图录屏",
       "phase": 2,
       "priority": "P0",
-      "passes": false
+      "passes": true
     },
     {
       "id": "P2-F5",
