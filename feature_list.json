@@ -30,7 +30,7 @@
       "description": "实现 workflow.config.json 解析器，与现有配置兼容",
       "phase": 1,
       "priority": "P0",
-      "passes": false
+      "passes": true
     },
     {
       "id": "P1-F5",
