@@ -8,10 +8,10 @@
 - **Timeline**: 14-20 weeks (4-5 months)
 
 ## Current Status
-**Initialized** - Project scaffold created, ready for Phase 1 implementation
+**Phase 1 In Progress** - Feature P1-F1 (工作流模板 DSL 规范) completed
 
 ## Next Step
-Start Phase 1, Feature 1: 工作流模板 DSL 规范
+Continue Phase 1, Feature P1-F2: 工作流引擎核心
 
 ## Feature Progress
 | Phase | Features | Status |

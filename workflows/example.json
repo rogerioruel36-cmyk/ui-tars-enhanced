@@ -1,0 +1,82 @@
+{
+  "version": "1.0.0",
+  "name": "example-workflow",
+  "description": "Example workflow demonstrating the UI-TARS DSL",
+  "metadata": {
+    "author": "UI-TARS Team",
+    "created": "2026-03-05T00:00:00Z",
+    "tags": ["example", "demo"],
+    "category": "automation"
+  },
+  "config": {
+    "timeout": 300000,
+    "retry": 3,
+    "browser": {
+      "engine": "puppeteer",
+      "headless": true,
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      }
+    }
+  },
+  "variables": {
+    "targetUrl": {
+      "type": "string",
+      "value": "https://example.com"
+    }
+  },
+  "skills": [
+    {
+      "name": "data-extractor",
+      "version": "1.0.0",
+      "source": "local",
+      "path": "./skills/data-extractor"
+    }
+  ],
+  "stages": [
+    {
+      "id": "init",
+      "name": "Initialize Browser",
+      "description": "Start browser and navigate to target",
+      "actions": [
+        {
+          "id": "navigate",
+          "type": "navigate",
+          "params": {
+            "url": "https://example.com"
+          }
+        },
+        {
+          "id": "screenshot",
+          "type": "screenshot",
+          "params": {
+            "path": "./reports/screenshot.png"
+          }
+        }
+      ]
+    },
+    {
+      "id": "extract",
+      "name": "Extract Data",
+      "description": "Extract content from page",
+      "actions": [
+        {
+          "id": "extract-title",
+          "type": "extract",
+          "selector": "h1",
+          "output": "pageTitle"
+        },
+        {
+          "id": "run-skill",
+          "type": "skill",
+          "skill": "data-extractor",
+          "skillParams": {
+            "selector": "article"
+          },
+          "output": "extractedData"
+        }
+      ]
+    }
+  ]
+}

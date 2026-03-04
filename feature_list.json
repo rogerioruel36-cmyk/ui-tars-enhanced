@@ -6,7 +6,7 @@
       "description": "定义 JSON Schema，包含 stages, actions, skills 结构",
       "phase": 1,
       "priority": "P0",
-      "passes": false
+      "passes": true
     },
     {
       "id": "P1-F2",
