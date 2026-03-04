@@ -62,7 +62,7 @@
       "description": "使用 PptxGenJS/Officegen 实现 HTML 到 PPT 导出，支持图表/图片",
       "phase": 2,
       "priority": "P0",
-      "passes": false
+      "passes": true
     },
     {
       "id": "P2-F4",
