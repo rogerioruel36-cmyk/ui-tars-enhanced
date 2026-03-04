@@ -14,7 +14,7 @@
       "description": "实现模板解析器、执行器、版本管理器",
       "phase": 1,
       "priority": "P0",
-      "passes": false
+      "passes": true
     },
     {
       "id": "P1-F3",
