@@ -1,0 +1,8 @@
+{
+  "name": "data-extractor",
+  "version": "1.0.0",
+  "description": "Extract structured data from web pages",
+  "author": "UI-TARS Team",
+  "dependencies": [],
+  "entry": "index.js"
+}

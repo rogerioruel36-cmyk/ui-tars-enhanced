@@ -22,7 +22,7 @@
       "description": "实现技能加载器、依赖解析、热更新机制",
       "phase": 1,
       "priority": "P0",
-      "passes": false
+      "passes": true
     },
     {
       "id": "P1-F4",
