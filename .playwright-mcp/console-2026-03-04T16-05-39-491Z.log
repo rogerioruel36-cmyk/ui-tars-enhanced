@@ -1,0 +1,18 @@
+[   17173ms] [ERROR] Failed to load resource: the server responded with a status of 403 () @ https://ct.pinterest.com/v3/?tid=2612884016232&event=PermutiveSegmentEntry&ed[segment_id]=%22141636%22:0
+[   19312ms] [ERROR] Failed to load resource: the server responded with a status of 403 () @ https://ct.pinterest.com/v3/?tid=2612884016232&event=PermutiveSegmentEntry&ed[segment_id]=%22179797%22:0
+[   21190ms] [ERROR] Failed to load resource: the server responded with a status of 403 () @ https://ct.pinterest.com/v3/?tid=2612884016232&event=PermutiveSegmentEntry&ed[segment_id]=%229710%22:0
+[   21685ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_CLOSED @ https://securepubads.g.doubleclick.net/tag/js/gpt.js:0
+[   22682ms] [ERROR] Failed to load resource: the server responded with a status of 403 () @ https://ct.pinterest.com/v3/?tid=2612884016232&event=PermutiveSegmentEntry&ed[segment_id]=%22147864%22:0
+[   23849ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_CLOSED @ https://cm.g.doubleclick.net/pixel?google_nid=permutive_dmp&google_cm&type=ddp&k=3c5b06e3-9636-482d-9481-33025da5def5&u=30ae1869-0e57-4292-89ef-f9080c06b0b9&gdpr=0:0
+[   36794ms] [ERROR] [readmo] Readmo container does not exist! @ https://s.yimg.com/dy/ads/readmo.js:0
+[   56945ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_CLOSED @ https://ssc.vanityfair.com/get_cookie_id?cookie_domain=vanityfair.com&r=1772640380020&callback=TreasureJSONPCallback0:0
+[   57375ms] [WARNING] [Meta Pixel] - Removed parameters from custom data due to potential violations. Go to Events Manager to learn more. @ https://connect.facebook.net/en_US/fbevents.js:175
+[   58560ms] [ERROR] Attestation check for Attribution Reporting on https://www.facebook.com failed. @ https://www.vanityfair.com/:0
+[   61699ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_CLOSED @ https://t.skimresources.com/api/v2/page:0
+[   63041ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_CLOSED @ https://www.glamour.com/infinityid/beacon?id=122fc45c-5024-47aa-be41-af18dcf67d2b:0
+[   63042ms] [WARNING] [ hotzones ads plugin 4d ] XID not propagated for  www.glamour.com Event @ https://ads-static.conde.digital/production/cns/builds/condenast/pixelpropagate.min.js:0
+[   63045ms] Uncaught (in promise) undefined
+    at beacon.onerror (https://ads-static.conde.digital/production/cns/builds/condenast/pixelpropagate.min.js:0:1785)
+[   67146ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_CLOSED @ https://t.skimresources.com/api/v2/robots.txt?__skimjs_preflight__please_ignore__=true&rnd=0.3719532510600352:0
+[   68180ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_CLOSED @ https://stats.g.doubleclick.net/g/collect?v=2&dma=0&npa=0&gcs=G111&gcd=13r3r3r3r5l1&tid=G-STN5DK87P9&cid=1342643477.1772640394&gtm=45j91e6321v898864551z878619093z99104542135za20gzb78619093zd78619093&tag_exp=103116026~103200004~115938465~115938468~116024733~116024736~117484252~117549814~117828178&_is_sw=f15s0t1&_tu=DA&aip=1:0
+[   86441ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_CLOSED @ https://tagging.vanityfair.com/events/4702afde7bff592f4cf2242c3778b6f1bcf7f29a3274de1a43e040b277ed84af:0

@@ -1,0 +1,43 @@
+# UI-TARS Enhancement Project Progress
+
+## Project Summary
+- **Project Name**: UI-TARS 增强计划 (UI-TARS Enhancement)
+- **Version**: 1.0
+- **Goal**: 将 UI-TARS 从单一浏览器自动化工具升级为多功能 AI Agent 工作流平台
+- **Total Features**: 15 features across 3 phases
+- **Timeline**: 14-20 weeks (4-5 months)
+
+## Current Status
+**Initialized** - Project scaffold created, ready for Phase 1 implementation
+
+## Next Step
+Start Phase 1, Feature 1: 工作流模板 DSL 规范
+
+## Feature Progress
+| Phase | Features | Status |
+|-------|----------|--------|
+| Phase 1 (基础能力建设) | 5 features | Pending |
+| Phase 2 (核心功能实现) | 5 features | Pending |
+| Phase 3 (高级功能与优化) | 5 features | Pending |
+
+## Known Risks
+1. **浏览器兼容性**: CDP 可能无法控制所有浏览器 - 缓解: Puppeteer + Playwright 双引擎
+2. **报告渲染差异**: 不同浏览器 PDF 差异 - 缓解: 使用无头 Chrome 统一
+3. **网络检索质量**: 依赖外部服务 - 缓解: 多源冗余 + 缓存
+4. **Office 兼容性**: 复杂文档格式可能丢失 - 缓解: 明确支持范围 + 回退
+5. **范围蔓延**: 功能过于庞大 - 缓解: 严格按阶段交付
+6. **技术债务**: 快速实现导致质量差 - 缓解: 代码审查 + 测试
+
+## Key Files
+- `feature_list.json` - All features with IDs and status
+- `init.sh` - Environment check script
+- `workflow.config.json` - To be created (Phase 1)
+- `src/` - Source code directory (Phase 1)
+- `workflows/` - Workflow templates (Phase 1)
+- `skills/` - Skill packages (Phase 1)
+
+## Architecture Principles
+- 向后完全兼容现有 UI-TARS
+- 不删减现有功能
+- 模块化架构确保可维护性和可扩展性
+- 工作流模板支持版本控制

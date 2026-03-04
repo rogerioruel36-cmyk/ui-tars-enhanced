@@ -1,0 +1,32 @@
+{
+  "model": {
+    "provider": "openai",
+    "id": "claude-haiku-4-5",
+    "apiKey": "sk-Tatq0CDGuZB58nY8ChSWAGlcoApKGzSDOFfeCxRBLaciSbmi",
+    "baseURL": "https://ai.ltcraft.cn:12000/v1",
+    "maxTokens": 4096
+  },
+  "browser": {
+    "control": "dom",
+    "headless": false
+  },
+  "workspace": "/Users/federerx/Desktop/ui-tars/workspace",
+  "planner": {
+    "enable": false
+  },
+  "search": {
+    "provider": "browser_search",
+    "count": 10,
+    "browserSearch": {
+      "engine": "google",
+      "needVisitedUrls": false
+    }
+  },
+  "tool": {
+    "exclude": [
+      "web_search",
+      "browser_get_markdown"
+    ]
+  },
+  "instructions": "Browser strategy: use the right tool for each task.\n\n[Text/Data tasks] Use agent-browser CLI (/opt/homebrew/bin/agent-browser) via shell — much cheaper on tokens:\n- agent-browser open <url>\n- agent-browser snapshot  (returns accessibility tree with @refs)\n- agent-browser click @ref / agent-browser fill @ref \"text\"\n- agent-browser get text @ref\nUse this for: news scraping, article extraction, search, forms, any text-based page.\n\n[Image downloading] To save article images: use agent-browser eval \"JSON.stringify([...document.querySelectorAll('article img, .content img')].map(i=>i.src))\" to extract image URLs, then download with curl -o workspace/images/<filename> <url>. Always save images alongside the markdown report.\n\n[Visual tasks] Use built-in browser tools (browser_navigate, browser_click, browser_screenshot) via CDP (http://127.0.0.1:18888):\nUse this for: games, canvas, charts, captcha, anything requiring visual understanding.\n\nDo not use web_search or browser_get_markdown."
+}

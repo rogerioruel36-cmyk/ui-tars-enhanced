@@ -1,0 +1,5 @@
+
+============================================================
+Source: reuters
+============================================================
+var dd={'rt':'i','cid':'AHrlqAAAAAMATcx_p0iY5mkAW8dUKA==','hsh':'2013457ADA70C67D6A4123E0A76873','b':1993696,'s':43909,'e':'9ec9ed58dbf9a986b53d7ef2273702898d25d2dd91758caba23415aa2d0a97ec453e912893dfdc779442f523a903773e','qp':'','host':'geo.captcha-delivery.com','cookie':'ShTLL9Ca5Hy1Gw~S7DUx5KY8~8RvrlJSDWbO_WS64rLOfkJ7YR~w0A_qsPYaavgtQHor_z7fzTz54Y8iEn_SgViOHdjF55h1HukcU_XaG8QBSB2_uSj~u3RDCWNcJw5M'}

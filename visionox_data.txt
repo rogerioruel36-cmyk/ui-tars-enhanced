@@ -1,0 +1,1079 @@
+
+======================================================================
+Source: WIKIPEDIA
+======================================================================
+
+Jump to content
+
+	
+		
+			
+				
+
+	
+	
+
+Main menu
+	
+	
+
+
+				
+		
+
+	
+	Main menu
+	move to sidebar
+	hide
+
+
+	
+
+	
+		Navigation
+	
+	
+		
+		
+			
+			Main pageContentsCurrent eventsRandom articleAbout WikipediaContact us
+		
+		
+	
+
+
+	
+
+	
+		Contribute
+	
+	
+		
+		
+			
+			HelpLearn to editCommunity portalRecent changesUpload fileSpecial pages
+		
+		
+	
+
+
+
+
+				
+
+	
+
+
+		
+			
+
+	
+	
+		
+		
+	
+
+
+		
+		
+			
+
+	
+
+Search
+	
+	
+		
+			
+				
+					
+						
+						
+					
+					
+				
+				Search
+			
+		
+	
+
+
+			
+	
+	
+
+	
+		
+		
+			
+			
+		
+		
+	
+
+
+	
+
+	
+		
+		
+			
+			
+		
+		
+	
+
+
+	
+		
+
+	
+	
+
+Appearance
+	
+	
+
+
+			
+				
+			
+		
+	
+
+
+	
+	
+
+	
+		
+		
+			
+			
+		
+		
+	
+
+
+	
+
+	
+		
+		
+			Donate
+
+Create account
+
+Log in
+
+
+			
+		
+		
+	
+
+
+	
+	
+
+	
+	
+
+Personal tools
+	
+	
+
+
+		
+
+	
+		
+		
+			
+			Donate Create account Log in
+		
+		
+	
+
+
+	
+	
+
+
+
+
+		
+	
+
+
+	
+		
+			
+  .cnotice {
+    position: relative;
+    background: #ffffff;
+    border: 1px solid #c8ccd1;
+    border-left: 10px solid #ffd700;
+    border-radius: 10px;
+    margin-bottom: 1em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+  }
+
+  .cnotice a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .cnotice-flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 15px;
+  }
+
+  .cnotice-logo img {
+    width: 90px;
+  }
+
+  .cnotice-content {
+    flex: 1 1 250px;
+    min-width: 0;
+    text-align: left;
+  }
+
+  .cnotice-title {
+    font-size: 120%;
+    font-weight: bold;
+    margin-bottom: 3px;
+  }
+
+  .cnotice-text {
+    font-size: 100%;
+    line-height: 1.3;
+    margin-bottom: 3px;
+  }
+
+  .cnotice-preview img {
+    width: 100px;
+    border-radius: 4px;
+    border: 1px solid #c8ccd1;
+  }
+
+  .cnotice-button {
+    background: #ffd700;
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-weight: bold;
+    display: inline-block;
+  }
+
+  .cnotice-button:hover {
+    background: #ffdf33;
+  }
+
+  #cnotice-toggle-box {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    cursor: pointer;
+    opacity: 0.8;
+  }
+
+  #cnotice-toggle-icon {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M4.34 2.93l12.73 12.73-1.41 1.41L2.93 4.35z'/%3E%3Cpath d='M17.07 4.34L4.34 17.07l-1.41-1.41L15.66 2.93z'/%3E%3C/svg%3E");
+    width: 18px;
+    height: 18px;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+#cnotice-translation-link {
+    position: absolute;
+    right: 25px;
+    bottom: 0px;
+    font-size: 0.8em;
+    white-space: nowrap;
+}
+
+#cnotice-translation-link:hover {
+    text-decoration: underline;
+}
+
+.rtl #cnotice-translation-link {
+    text-align: left;
+    left: 25px;
+}
+
+/* --- Dark mode --- */
+html.skin-theme-clientpref-night .cnotice {
+    color: #eaecf0;
+    background: black;
+    border-color: #72777d;
+}
+html.skin-theme-clientpref-night #cnotice-toggle-box {
+    filter: invert(1);
+}
+
+@media (prefers-color-scheme: dark) {
+    html.skin-theme-clientpref-os .cnotice {
+        color: #eaecf0;
+        background: black;
+        border-color: #72777d;
+    }
+    html.skin-theme-clientpref-os #cnotice-toggle-box {
+        filter: invert(1);
+    }
+}
+
+html.skin-theme-clientpref-night .cnotice-logo:first-child img {
+    content: url("//upload.wikimedia.org/wikipedia/commons/4/4e/Wiki_Loves_Ramadan_Logo_2025_White.svg");
+}
+
+@media (prefers-color-scheme: dark) {
+    html.skin-theme-clientpref-os .cnotice-logo:first-child img {
+        content: url("//upload.wikimedia.org/wikipedia/commons/4/4e/Wiki_Loves_Ramadan_Logo_2025_White.svg");
+    }
+}
+
+
+
+
+  
+    
+      
+        
+      
+       
+         
+          Wiki Loves Ramadan 2026
+         
+       
+          Tell the world about Ramadan traditions! Join the global campaign to bridge knowledge gaps about Islamic history and culture.
+       
+       
+      
+        
+      
+      
+        Participate Now
+      
+    
+
+  
+    
+        
+            
+        
+    
+
+		
+		
+			
+		
+			
+				
+				
+				
+		
+		
+	
+	
+				
+					
+					
+	
+	Contents
+	move to sidebar
+	hide
+
+
+
+	
+		
+			
+				(Top)
+			
+		
+		
+		
+			
+				1
+				History
+			
+		
+		
+			
+				
+				Toggle History subsection
+			
+		
+		
+			
+			
+				
+					1.1
+					Practical OLEDs
+				
+			
+			
+			
+			
+		
+	
+	
+	
+		
+			
+				2
+				Working principle
+			
+		
+		
+		
+		
+	
+	
+		
+			
+				3
+				Carrier balance
+			
+		
+		
+		
+		
+	
+	
+		
+			
+				4
+				Material technologies
+			
+		
+		
+			
+				
+				Toggle Material technologies subsection
+			
+		
+		
+			
+			
+				
+					4.1
+					Small molecules
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					4.2
+					Polymer light-emitting diodes
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					4.3
+					Phosphorescent materials
+				
+			
+			
+			
+			
+		
+	
+	
+	
+		
+			
+				5
+				Device architectures
+			
+		
+		
+			
+				
+				Toggle Device architectures subsection
+			
+		
+		
+			
+			
+				
+					5.1
+					Structure
+				
+			
+			
+			
+				
+			
+				
+					5.1.1
+					Bottom emission
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					5.1.2
+					Top emission
+				
+			
+			
+			
+			
+		
+	
+		
+		
+			
+				
+					5.2
+					Improvements
+				
+			
+			
+			
+				
+			
+				
+					5.2.1
+					Deuterium
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					5.2.2
+					Micro Lens Array (MLA)
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					5.2.3
+					Micro-cavity theory
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					5.2.4
+					Color filters
+				
+			
+			
+			
+			
+		
+	
+		
+		
+			
+				
+					5.3
+					Other architectures
+				
+			
+			
+			
+				
+			
+				
+					5.3.1
+					Transparent OLEDs
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					5.3.2
+					Graded heterojunction
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					5.3.3
+					Stacked OLEDs
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					5.3.4
+					Inverted OLED
+				
+			
+			
+			
+			
+		
+	
+		
+	
+	
+	
+		
+			
+				6
+				Color patterning technologies
+			
+		
+		
+			
+				
+				Toggle Color patterning technologies subsection
+			
+		
+		
+			
+			
+				
+					6.1
+					Shadow mask patterning method
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					6.2
+					White + color filter method (WOLED)
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					6.3
+					Other color patterning approaches
+				
+			
+			
+			
+			
+		
+	
+	
+	
+		
+			
+				7
+				Thin-film transistor backplanes
+			
+		
+		
+		
+		
+	
+	
+		
+			
+				8
+				Advantages
+			
+		
+		
+		
+		
+	
+	
+		
+			
+				9
+				Disadvantages
+			
+		
+		
+			
+				
+				Toggle Disadvantages subsection
+			
+		
+		
+			
+			
+				
+					9.1
+					Lifespan
+				
+			
+			
+			
+				
+			
+				
+					9.1.1
+					Degradation
+				
+			
+			
+			
+			
+		
+	
+		
+		
+			
+				
+					9.2
+					Color balance
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					9.3
+					Efficiency of blue OLEDs
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					9.4
+					Water damage
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					9.5
+					Outdoor performance
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					9.6
+					Power consumption
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					9.7
+					Screen flicker
+				
+			
+			
+			
+			
+		
+	
+	
+	
+		
+			
+				10
+				Manufacturers and commercial uses
+			
+		
+		
+			
+				
+				Toggle Manufacturers and commercial uses subsection
+			
+		
+		
+			
+			
+				
+					10.1
+					Fashion
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					10.2
+					Automotive
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					10.3
+					Company-specific applications
+				
+			
+			
+			
+				
+			
+				
+					10.3.1
+					Samsung
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					10.3.2
+					Sony
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					10.3.3
+					LG
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					10.3.4
+					Mitsubishi
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					10.3.5
+					Recom Group
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					10.3.6
+					Dell
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					10.3.7
+					Apple
+				
+			
+			
+			
+			
+		
+		
+			
+				
+					10.3.8
+					Nintendo
+				
+			
+			
+			
+			
+		
+	
+		
+	
+	
+	
+		
+			
+				11
+				Research
+			
+		
+		
+		
+		
+	
+	
+		
+			
+				12
+				See also
+			
+		
+		
+		
+		
+	
+	
+		
+			
+				13
+				Notes
+			
+		
+		
+		
+		
+	
+	
+		
+			
+				14
+				References
+			
+		
+		
+		
+		
+	
+	
+		
+			
+				15
+				Further reading
+			
+		
+		
+		
+		
+	
+	
+		
+			
+				16
+				External links
+			
+		
+		
+		
+		
+	
+
+
+
+					
+		
+			
+		
+		
+			
+				
+					
+						
+
+	
+	
+
+Toggle the table of contents
+	
+	
+
+
+							
+			
+		
+	
+
+
+	
+
+======================================================================
+Source: SCHOLAR
+======================================================================
+#gs_md_s,.gs_md_wnw{z-index:1200;position:fixed;top:0;left:0;width:100%;height:100%;visibility:hidden;}.gs_md_ds:before{content:'';position:absolute;background-color:#fff;z-index:100;opacity:0;visibility:hidden;top:0;bottom:0;right:0;left:0;}.gs_md_ds.gs_md_d:not(.gs_el_ph .gs_md_wmw):before{top:-1px;bottom:-1px;right:-1px;left:-1px;}#gs_md_s{background-color:#fff;opacity:0;}.gs_el_ta #gs_md_s,.gs_el_ph #gs_md_s,.gs_el_ta .gs_md_ds:before,.gs_el_ph .gs_md_ds:before{background-color:#666;}#gs_md_s.gs_vis,.gs_md_ds.gs_md_ins_vis:before{opacity:.5;visibility:visible;}.gs_md_wnw{transition:all 0s .218s;}.gs_md_wnw.gs_vis{visibility:visible;transition:all 0s;}.gs_el_tc .gs_md_ds:before{transition:opacity .15s,visibility 0s .15s;}.gs_el_tc .gs_md_ds.gs_md_ins_vis:before{transition:opacity .218s,visibility 0s;}.gs_md_wnw>.gs_md_d{position:relative;margin:0 auto;width:464px;box-shadow:2px 2px 8px rgba(0,0,0,.2);white-space:normal;}.gs_el_ta .gs_md_wnw>.gs_md_d,.gs_el_ph .gs_md_wnw>.gs_md_d{box-shadow:2px 2px 8px rgba(0,0,0,.65);}.gs_el_ph .gs_md_wnw>.gs_md_d{width:80%;max-width:440px;}.gs_el_ph .gs_md_wmw>.gs_md_d{display:flex;flex-direction:column;width:100%;height:100%;max-width:none;border:none;box-shadow:none;transform:translate(0,100%);transform:translate(0,100vh);transition:transform .27s cubic-bezier(.4,0,.6,1),opacity 0s .27s,visibility 0s .27s,max-height 0s .27s;}.gs_el_ph .gs_md_wmw>.gs_md_d.gs_vis{transform:translate(0,0);transition:transform .3s cubic-bezier(0,0,.2,1);}.gs_md_wmw>.gs_md_d.gs_abt,.gs_el_ph .gs_md_wmw>.gs_md_d.gs_abt{transition:none;}.gs_md_hdr{display:flex;align-items:center;height:47px;border-bottom:1px solid #e0e0e0;border-bottom-color:rgba(0,0,0,.12);background-color:#f5f5f5;}.gs_md_hdr>a,.gs_md_hdr>a.gs_btn_lrge{flex:0 0 auto;width:41px;height:47px;}.gs_el_ph .gs_md_hdr>a{margin:0 2px 0 0;}.gs_el_ph a.gs_md_hdr_c{margin:0 0 0 2px;}.gs_md_hdr_b{margin:0 41px 0 16px;}.gs_el_ph .gs_md_hdr_b{margin:0 16px;}.gs_md_hdr_t:empty~.gs_md_hdr_b{margin-left:0;}.gs_md_hdr_b:empty{width:41px;margin:0;}.gs_el_ph .gs_md_hdr_b:empty{margin-right:2px;}.gs_md_hdr_b:empty:not(:last-child){display:none;}.gs_md_hdr_b>button{min-width:51px;height:33px;}.gs_md_hdr_t{flex:1 1 auto;font-size:18px;font-weight:normal;color:#666;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;}.gs_md_bdy{position:relative;overflow-y:auto;box-sizing:border-box;padding:24px 41px 0 41px;}.gs_md_bdy:after{display:block;content:"";clear:both;padding-bottom:24px;}.gs_el_ph .gs_md_bdy{padding:16px 16px 0 16px;}.gs_el_ph .gs_md_bdy:after{padding-bottom:16px;}.gs_el_ph .gs_md_wmw .gs_md_bdy{flex:1;}.gs_md_ftr{border-top:1px solid #e0e0e0;}.gs_md_lbl{display:block;font-size:16px;margin:0 0 16px 0;word-wrap:break-word;}.gs_md_btns{margin:24px 0 0 0;white-space:nowrap;}.gs_el_ph .gs_md_btns{margin:16px 0 0 0;}.gs_md_btns button{margin-right:16px;}.gs_md_btns button:last-child{margin-right:0;}.gs_md_prg{margin:24px 0;text-align:center;}.gs_md_prg .gs_alrt{padding:4px 16px;}.gs_md_ldg:before{content:"";position:absolute;top:0;left:0;bottom:0;right:0;background-color:#fff;opacity:.5;z-index:100;}正在加载...系统目前无法执行此操作，请稍后再试。引用#gs_cit{width:520px;max-width:80%;}.gs_el_ph #gs_cit{width:100%;max-width:100%;}#gs_citt table{width:100%;margin-top:-8px;}#gs_citt td,#gs_citt th{vertical-align:top;padding:8px 0;}#gs_citt th{text-align:right;font-weight:normal;color:#777;padding-right:16px;white-space:nowrap;-webkit-user-select:none;user-select:none;}#gs_citi{margin:16px 0 0 0;text-align:center;}.gs_el_ph #gs_citi{margin:16px 0 8px 0;}.gs_citi{margin-right:16px;white-space:nowrap;padding:7px 0 5px 0;}.gs_citi:first-child{margin-left:16px;}高级搜索#gs_asd{width:80%;max-width:552px;}.gs_el_ph #gs_asd{width:100%;max-width:100%;}#gs_asd_frm{margin-top:-6px;}.gs_el_tc #gs_asd_frm{margin-top:-8px;}.gs_asd_tr{clear:both;}.gs_el_tc .gs_asd_tr{padding:8px 0;}.gs_el_tc .gs_asd_tr:first-child{padding-bottom:0;}.gs_asd_dt{float:left;width:190px;padding:6px 2px 2px;}.gs_el_tc .gs_asd_dt{float:none;width:auto;padding:0 0 4px 0;}.gs_asd_dd{margin-left:194px;padding:2px;}.gs_el_tc .gs_asd_dd{margin-left:0;padding:0;}.gs_asd_yri .gs_in_txt{width:48px;}.gs_el_ph #gs_asd input,.gs_el_ph #gs_asd label{-webkit-tap-highlight-color:rgba(0,0,0,0);}.gs_asd_occtr{padding:5px 0;}.gs_el_tc .gs_asd_occtr{padding:0;}查找文章包含全部字词包含完整字句包含至少一个字词不包含字词出现搜索字词位置文章中任何位置位于文章标题显示以下作者所著的文章：例如：丁肇中 或 "PJ Hayes"显示以下刊物上的文章：例如：《学术探索》或《Nature》显示在此期间发表的文章： — 例如：1996已保存到“我的图书馆”完成删除文章文章个人学术档案我的个人学术档案我的图书馆快讯统计指标实验室高级搜索设置登录登录#gs_alrt{position:fixed;bottom:48px;left:16px;max-width:384px;z-index:1250;display:flex;justify-content:space-between;align-items:center;font-size:13px;line-height:16px;color:#e2e2e2;background:#333;text-align:left;border-radius:3px;box-shadow:0 3px 5px -1px rgba(0,0,0,.2),0 6px 10px 0 rgba(0,0,0,.14),0 1px 18px 0 rgba(0,0,0,.12);visibility:hidden;transform-origin:center;transform:scale(0.8,0.8) translate(0,100%);}.gs_el_ph #gs_alrt{bottom:0;left:0;width:100%;max-width:none;border-radius:0;box-shadow:none;transform:scale(1,1) translate(0,100%);}#gs_alrt.gs_vis{visibility:visible;transform:scale(1,1) translate(0,0);}#gs_alrt.gs_anm{transition:transform .067s cubic-bezier(.4,0,1,1),visibility 0s .067s;}#gs_alrt.gs_vis.gs_anm{transition:transform .067s cubic-bezier(0,0,.2,1);}.gs_el_ph #gs_alrt.gs_anm{transition:transform .084s cubic-bezier(.4,0,1,1),visibility 0s .084s;}.gs_el_ph #gs_alrt.gs_vis.gs_anm{transition:transform .1s cubic-bezier(0,0,.2,1);}#gs_alrt_m{display:block;padding:16px;}#gs_alrt_l{display:block;padding:8px;margin:0 8px 0 -8px;border-radius:3px;color:#fcc934;text-transform:uppercase;text-decoration:none;}#gs_alrt_l:hover{background-color:rgba(255,255,255,.05)}#gs_alrt_l:active{background-color:rgba(255,255,255,.1)}#gs_alrt_l:empty{display:none}#gs_alrt_m a{padding:8px 0;color:#e2e2e2;text-decoration:underline;}#gs_alrt_m a:active{color:#f6aea9}文章学术搜索找到约 14 条结果 （用时0.07秒）我的个人学术档案我的图书馆年份时间不限2026以来2025以来2022以来按相关性排序按日期排序不限语言中文网页简体中文网页类型不限评论性文章包括专利包含引用时间不限2026以来2025以来2022以来自定义范围... — 搜索按相关性排序按日期排序不限语言中文网页简体中文网页类型不限评论性文章包括专利包含引用创建快讯  17‐2: Development of Visionox intelligent Pixelization (ViPTM) Technology in  AMOLED ApplicationsY Xiao, L Ni, Y Fu, Y Yao, H Zhang… - … Symposium Digest of …, 2023 - Wiley Online Library… 8 shows the simulated transmission spectra of FMM and ViP based on a Visionox LTPO R&D 
+product. As listed in Table 4, ViP has increased transmittance by at least 49.2%, both in the …保存 引用 被引用次数：14 相关文章    64‐3: Super high PPI panel design on GOLED (glass base OLED)S Feng - SID Symposium Digest of Technical Papers, 2025 - Wiley Online Library… Visionox used the ViP (Visionox intelligent pixelization) tech to solve the super high PPI … 
+1 , ViP teck used the isolate column and photo lithography process to replace the FMM tech …保存 引用 相关文章    27‐3: Progress in High‐Performance AMOLED Display with ViP™ TechnologyY Xiao, Z Ding, L Ni, Y Fu, Y Yao… - … Symposium Digest of …, 2024 - Wiley Online Library… The Visionox intelligent Pixelization (ViPTM) technology has been verified with many … 
+AMOLED display products. With “ViP+”, Visionox will bring more highperformance AMOLED …保存 引用 被引用次数：4 相关文章    P‐14.20: ViP™ Based AMOLED with White‐Light Emission Angular Color Shift Less Than 1 JNCDB Liu, J Zhao, M Li, K Han, Y Gao… - … Symposium Digest of …, 2025 - Wiley Online Library… Visionox intelligent Pixelization (ViPTM) in SID[1,2], which demonstrated many advantages 
+over traditional AMOLED … As for the RGB AMOLED display, white-light color shift actually …保存 引用 相关文章    28‐2: Invited Paper: Recent Technical and Mass Production Progress on High‐Performance ViP AMOLED TechnologyY Xiao, Z Ding, Y Du, X Sun, Z Xia, H Li… - … Symposium Digest of …, 2025 - Wiley Online Library… developed ViP (Visionox intelligent Pixelization) technology to overcome the challenges 
+brought to AMOLED displays by FMM technology. ViP requires no FMM or other metal masks …保存 引用 相关文章    [PDF] wiley.comFull View[PDF][PDF]
+
+======================================================================
+Source: HACKERNEWS
+======================================================================
+Hacker Newsnew | past | comments | ask | show | jobs | submitlogin1.Motorola announces a partnership with GrapheneOS Foundation (motorolanews.com)1200 points by km 8 hours ago  | hide | 411 comments2.Anthropic Cowork feature creates 10GB VM bundle on macOS without warning (github.com/anthropics)30 points by mystcb 48 minutes ago  | hide | 7 comments3./e/OS is a complete "deGoogled", mobile ecosystem (e.foundation)396 points by doener 6 hours ago  | hide | 232 comments4.OpenClaw Surpasses React to Become the Most-Starred Software Project on GitHub (star-history.com)58 points by whit537 1 hour ago  | hide | 40 comments5.Apple introduces the new iPad Air, powered by M4 (apple.com)38 points by Garbage 58 minutes ago  | hide | 23 comments6.AMD Am386 released March 2, 1991 (dfarq.homeip.net)35 points by jnord 2 hours ago  | hide | 5 comments7.An Interesting Find: STM32 RDP1 Decryptor (carlossless.io)14 points by carlossless 57 minutes ago  | hide | discuss8.How to talk to anyone and why you should (theguardian.com)257 points by Looky1173 7 hours ago  | hide | 386 comments9.Microsoft bans the word "Microslop" on its Discord, then locks the server (windowslatest.com)469 points by robtherobber 4 hours ago  | hide | 181 comments10.Making Video Games in 2025 (without an engine) (noelberry.ca)273 points by alvivar 9 hours ago  | hide | 121 comments11.Inside the M4 Apple Neural Engine, Part 1: Reverse Engineering (maderix.substack.com)50 points by zdw 2 hours ago  | hide | 10 comments12.U.S. science agency moves to restrict foreign scientists from its labs (science.org)225 points by JeanKage 5 hours ago  | hide | 161 comments13.Show HN: Omni – Open-source workplace search and chat, built on Postgres (github.com/getomnico)95 points by prvnsmpth 6 hours ago  | hide | 26 comments14.If AI writes code, should the session be part of the commit? (github.com/mandel-macaque)369 points by mandel_x 14 hours ago  | hide | 319 comments15.Jolla phone – a full-stack European alternative (jolla.com)288 points by spinningslate 4 hours ago  | hide | 115 comments16.Mondrian Entered the Public Domain. The Estate Disagrees (copyrightlately.com)103 points by Tomte 8 hours ago  | hide | 35 comments17.Use the Mikado Method to do safe changes in a complex codebase (understandlegacycode.com)8 points by foenix 1 hour ago  | hide | 5 comments18.Neocaml – Rubocop Creator's New OCaml Mode for Emacs (github.com/bbatsov)54 points by TheWiggles 6 hours ago  | hide | 8 comments19.Libxml2 Enterprise Edition (AGPL, from the previous maintainer) (codeberg.org/nwellnhof)22 points by todsacerdoti 3 hours ago  | hide | 8 comments20.Go-Native Durable Execution (dbos.dev)30 points by hmaxdml 3 hours ago  | hide | 6 comments21.Show HN: Web Audio Studio – A Visual Debugger for Web Audio API Graphs (webaudio.studio)20 points by alexgriss 3 hours ago  | hide | 2 comments22.Computer-generated dream world: Virtual reality for a 286 processor (deadlime.hu)128 points by MBCook 10 hours ago  | hide | 23 comments23.WebMCP is available for early preview (chrome.com)336 points by andsoitis 16 hours ago  | hide | 183 comments24.An interactive intro to Elliptic Curve Cryptography (growingswe.com)82 points by vismit2000 9 hours ago  | hide | 12 comments25.How to record and retrieve anything you've ever had to look up twice (ellanew.com)112 points by Curiositry 10 hours ago  | hide | 38 comments26.Right-sizes LLM models to your system's RAM, CPU, and GPU (github.com/alexsjones)212 points by bilsbie 15 hours ago  | hide | 49 comments27.Show HN: Timber – Ollama for classical ML models, 336x faster than Python (github.com/kossisoroyce)163 points by kossisoroyce 14 hours ago  | hide | 29 comments28.Everett shuts down Flock camera network after judge rules footage public record (wltx.com)376 points by aranaur 11 hours ago  | hide | 112 comments29.Tove Jansson's criticized illustrations of The Hobbit (2023) (tovejansson.com)206 points by abelanger 17 hours ago  | hide | 113 comments30.Process-Based Concurrency: Why Beam and OTP Keep Being Right (variantsystems.io)73 points by linkdd 10 hours ago  | hide | 36 commentsMore
+Guidelines | FAQ | Lists | API | Security | Legal | Apply to YC | Contact
+Search: 

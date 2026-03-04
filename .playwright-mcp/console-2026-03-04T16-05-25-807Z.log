@@ -1,0 +1,13 @@
+[    3765ms] [WARNING] Specifying 'overflow: visible' on img, video and canvas tags may cause them to produce visual content outside of the element bounds. See https://github.com/WICG/view-transitions/blob/main/debugging_overflow_on_images.md for details. @ https://edition.cnn.com/politics:11722
+[    4240ms] [ERROR] Failed to load resource: net::ERR_CERT_COMMON_NAME_INVALID @ https://api.rlcdn.com/api/identity/envelope?pid=13452:0
+[    6535ms] [ERROR] Access to fetch at 'https://id5-sync.com/g/v2/963.json' from origin 'https://edition.cnn.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ https://edition.cnn.com/politics:0
+[    6535ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://id5-sync.com/g/v2/963.json:0
+[    8871ms] [ERROR] The promise timed out. @ https://edition.cnn.com/media/sites/js/bundles/cnn-edition-adfuel-56fb8ddd86c230e2787802488262511eec1d3ae11f080f8404caba763cfc30ce.min.js:0
+[    8871ms] [ERROR] There was an error loading the Integral Ad Science script. The promise timed out. @ https://edition.cnn.com/media/sites/js/bundles/cnn-edition-adfuel-56fb8ddd86c230e2787802488262511eec1d3ae11f080f8404caba763cfc30ce.min.js:0
+[    8872ms] The promise timed out.
+[    8872ms] The promise timed out.
+[    8883ms] [ERROR] Error in loadScript. The promise timed out. @ https://edition.cnn.com/media/sites/js/bundles/cnn-edition-adfuel-body-7df6e020e30c1b89ee162a518f060a18abe283901059514081520edbf4950e2e.min.js:0
+[   11305ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_CLOSED @ https://securepubads.g.doubleclick.net/tag/js/gpt.js:0
+[   11568ms] [ERROR] Failed to load resource: the server responded with a status of 410 (Gone) @ https://ads.stickyadstv.com/user-matching?id=185&_fw_gdpr=0&_fw_gdpr_consent=:0
+[   11805ms] [ERROR] Failed to load resource: the server responded with a status of 410 (Gone) @ https://ads.stickyadstv.com/auto-user-sync:0
+[   12022ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_CLOSED @ https://cdn.ml314.com/taglw.js:0

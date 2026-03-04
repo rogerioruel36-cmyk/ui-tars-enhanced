@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阿亚图拉·哈梅内伊 - 伊朗最高领袖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 50px 40px;
+        }
+        
+        .intro-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+            align-items: center;
+        }
+        
+        .intro-text h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        
+        .intro-text p {
+            margin-bottom: 15px;
+            text-align: justify;
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+        
+        .intro-image {
+            text-align: center;
+        }
+        
+        .intro-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .intro-image img:hover {
+            transform: scale(1.05);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .info-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s ease;
+        }
+        
+        .info-card:hover {
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .info-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .info-card p {
+            color: #555;
+            line-height: 1.7;
+        }
+        
+        .timeline {
+            margin: 50px 0;
+            position: relative;
+        }
+        
+        .timeline h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .timeline-item {
+            display: flex;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 30px;
+            bottom: -30px;
+            width: 2px;
+            background: #667eea;
+        }
+        
+        .timeline-item:last-child::before {
+            display: none;
+        }
+        
+        .timeline-dot {
+            width: 40px;
+            height: 40px;
+            background: #667eea;
+            border-radius: 50%;
+            margin-right: 30px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #667eea;
+        }
+        
+        .timeline-content {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            flex: 1;
+        }
+        
+        .timeline-content h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+        
+        .timeline-content p {
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .gallery {
+            margin: 50px 0;
+        }
+        
+        .gallery h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .key-facts {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin: 50px 0;
+        }
+        
+        .key-facts h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+        
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .fact-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid white;
+        }
+        
+        .fact-item strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+        
+        .footer {
+            background: #1a1a2e;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .intro-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .header {
+                padding: 40px 20px;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>阿亚图拉·哈梅内伊</h1>
+            <p>伊朗伊斯兰共和国最高领袖 (1989-2026)</p>
+        </div>
+        
+        <div class="content">
+            <!-- 介绍部分 -->
+            <div class="intro-section">
+                <div class="intro-text">
+                    <h2>生平概述</h2>
+                    <p>阿里·侯赛因·哈梅内伊（1939年4月19日-2026年2月28日）是伊朗政治家和什叶派宗教领袖，自1989年起担任伊朗第二任最高领袖，直至2026年遇刺身亡。他曾于1981年至1989年担任伊朗总统。作为最高领袖，他的任期长达36年6个月，使他成为中东地区任期最长的国家元首。</p>
+                    <p>哈梅内伊出生于霍拉桑地区的马什哈德，在家乡的宗教学院学习，后于1958年定居库姆，师从鲁霍拉·霍梅尼。他积极参与反对伊朗国王穆罕默德·礼萨·巴列维的运动，在巴列维政权统治期间被逮捕六次，并被流放三年。</p>
+                </div>
+                <div class="intro-image">
+                    <img src="image_3.jpg" alt="哈梅内伊肖像">
+                </div>
+            </div>
+            
+            <!-- 关键信息卡片 -->
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>📅 重要日期</h3>
+                    <p><strong>出生：</strong>1939年4月19日<br>
+                    <strong>担任总统：</strong>1981-1989年<br>
+                    <strong>担任最高领袖：</strong>1989-2026年<br>
+                    <strong>逝世：</strong>2026年2月28日</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>🎓 教育背景</h3>
+                    <p>在马什哈德宗教学院接受基础和高等神学教育，师从谢赫·哈什姆·卡兹维尼和阿亚图拉·米拉尼。1958年赴库姆深造，师从霍梅尼。</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>🏛️ 政治生涯</h3>
+                    <p>伊朗革命后担任多个重要职位，包括德黑兰周五祈祷领导人、国防副部长。1981年当选伊朗总统，任期8年。1989年被选为最高领袖。</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>💪 权力基础</h3>
+                    <p>通过建立庞大的个人网络、控制伊斯兰革命卫队、掌控主要宗教机构和媒体，逐步巩固权力。拥有对伊朗军队、司法和立法部门的直接或间接控制权。</p>
+                </div>
+            </div>
+            
+            <!-- 关键事实 -->
+            <div class="key-facts">
+                <h2>关键事实</h2>
+                <div class="facts-grid">
+                    <div class="fact-item">
+                        <strong>🎯 政治身份</strong>
+                        被认为是务实的强硬派，在保守派和改革派之间平衡权力
+                    </div>
+                    <div class="fact-item">
+                        <strong>⚔️ 遇刺事件</strong>
+                        1981年6月27日在清真寺遭炸弹袭击，右臂永久瘫痪
+                    </div>
+                    <div class="fact-item">
+                        <strong>🌍 外交政策</strong>
+                        支持什叶派伊斯兰主义，反对以色列，支持"抵抗轴心"联盟
+                    </div>
+                    <div class="fact-item">
+                        <strong>💰 经济影响</strong>
+                        控制价值约950亿美元的"Setad"财务帝国
+                    </div>
+                    <div class="fact-item">
+                        <strong>📚 文化兴趣</strong>
+                        精通阿拉伯语、波斯语和阿塞拜疆语，热爱诗歌和文学
+                    </div>
+                    <div class="fact-item">
+                        <strong>⚛️ 核政策</strong>
+                        发布教令禁止生产大规模杀伤性武器，支持民用核技术
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 时间线 -->
+            <div class="timeline">
+                <h2>重要时间线</h2>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>1939年4月19日</h4>
+                        <p>阿里·侯赛因·哈梅内伊在马什哈德出生</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>1958年</h4>
+                        <p>定居库姆，开始师从霍梅尼学习伊斯兰教法</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>1979年</h4>
+                        <p>伊朗伊斯兰革命成功，哈梅内伊担任多个政府职位</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>1981年6月27日</h4>
+                        <p>在清真寺遭炸弹袭击，右臂永久瘫痪</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>1981-1989年</h4>
+                        <p>担任伊朗总统，任期内伊朗经历伊朗-伊拉克战争</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>1989年6月4日</h4>
+                        <p>被专家委员会选举为伊朗最高领袖</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>1989-2026年</h4>
+                        <p>担任伊朗最高领袖36年6个月，成为中东任期最长的国家元首</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>2025年6月13日</h4>
+                        <p>十二日战争开始，以色列对伊朗发动军事打击</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h4>2026年2月28日</h4>
+                        <p>哈梅内伊在美国和以色列的导弹袭击中遇刺身亡</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 图片库 -->
+            <div class="gallery">
+                <h2>相关图片</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="image_1.jpg" alt="维基百科保护标志">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="image_2.jpg" alt="当前事件标志">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="image_4.jpg" alt="哈梅内伊签名">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="image_5.jpg" alt="伊朗陆军旗帜">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 政治遗产部分 -->
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>🏛️ 政治遗产</h3>
+                    <p>哈梅内伊通过建立"平行结构"来削弱各政府机构的权力，同时加强最高领袖办公室的权力。他将伊斯兰革命卫队转变为国内控制和地区影响力的主要工具。</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>🌐 国际关系</h3>
+                    <p>哈梅内伊的外交政策以什叶派伊斯兰主义为中心，支持"抵抗轴心"联盟，包括叙利亚、伊拉克、也门和加沙的武装组织。他坚决反对以色列和美国。</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>📊 经济政策</h3>
+                    <p>支持国有企业私有化，利用伊朗丰富的石油和天然气资源，将伊朗转变为"能源超级大国"。通过Setad基金会控制庞大的经济帝国。</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>⚛️ 核政策</h3>
+                    <p>支持伊朗民用核计划，同时发布教令禁止生产大规模杀伤性武器。在2015年伊朗核协议中发挥关键作用，但在美国2018年退出后采取强硬立场。</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>本页面基于维基百科资料编制 | 最后更新：2026年3月</p>
+            <p>© 2026 信息资源库 | 所有权利保留</p>
+        </div>
+    </div>
+</body>
+</html>

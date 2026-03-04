@@ -1,0 +1,11 @@
+[    8301ms] Error: Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
+    at Pt (https://mulerun.com/assets/vendor-react-DcOWIUc1.js:8:31371)
+    at g0 (https://mulerun.com/assets/vendor-react-DcOWIUc1.js:8:32390)
+    at k1 (https://mulerun.com/assets/vendor-react-DcOWIUc1.js:8:86361)
+    at bn (https://mulerun.com/assets/vendor-react-DcOWIUc1.js:8:117325)
+    at dv (https://mulerun.com/assets/vendor-react-DcOWIUc1.js:8:116584)
+    at fs (https://mulerun.com/assets/vendor-react-DcOWIUc1.js:8:116496)
+    at ns (https://mulerun.com/assets/vendor-react-DcOWIUc1.js:8:116355)
+    at cv (https://mulerun.com/assets/vendor-react-DcOWIUc1.js:8:111912)
+    at Mv (https://mulerun.com/assets/vendor-react-DcOWIUc1.js:8:123939)
+    at MessagePort.At (https://mulerun.com/assets/vendor-react-DcOWIUc1.js:1:11028)

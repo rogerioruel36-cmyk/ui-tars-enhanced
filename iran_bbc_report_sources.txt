@@ -1,0 +1,138 @@
+================================================================================
+REPORT: Iran Situation - Global Political and Economic Impact
+Based on BBC News Analysis
+Report Date: March 2, 2026
+================================================================================
+
+PRIMARY DATA SOURCES (BBC NEWS):
+
+1. UK Military Bases and Defensive Operations
+   Title: "UK will allow US to use bases to strike Iranian missile sites, PM says"
+   URL: https://www.bbc.com/news/articles/cqj9g11p1ezo
+   Author: Ben Hatton
+   Published: March 1, 2026 (2 hours ago from report date)
+   Key Points:
+   - UK Prime Minister Keir Starmer confirms UK agreement to US request
+   - RAF Fairford (Gloucestershire) and Diego Garcia (Indian Ocean) bases approved
+   - Described as "specific and limited defensive purpose"
+   - UK emphasizes learning lessons from Iraq mistakes
+   - 200,000 British citizens in Middle East region at risk
+   - Iranian strikes hit airports, hotels, military bases in region
+
+2. Energy Market Impact
+   Title: "Oil prices jump after ships attacked near Strait of Hormuz"
+   URL: https://www.bbc.com/news/articles/c75evve6l63o
+   Published: March 1, 2026
+   Key Points:
+   - Vessel attacks near critical Strait of Hormuz
+   - Oil prices surge due to supply concerns
+   - Experts warn prolonged conflict could push energy prices higher
+   - Global energy market faces sustained pressure
+   - Critical shipping route threatened
+
+3. Humanitarian and Evacuation Operations
+   Title: "UK mounts operation to support thousands of Britons in Middle East"
+   URL: https://www.bbc.com/news/articles/cdjm8pn0ld8o
+   Published: March 1, 2026
+   Key Points:
+   - UK government formulating evacuation plans
+   - Potential evacuation if airspace remains closed
+   - 200,000 British nationals in region (residents, tourists, transit passengers)
+   - Government support operations ongoing
+
+SECONDARY RELATED BBC SOURCES:
+
+4. Conflict Overview
+   Title: "What we know so far about the US-Israel attacks and Iran's retaliation"
+   URL: https://www.bbc.com/news/articles/cx2dyz6p3weo
+   
+5. Geographic Impact
+   Title: "In maps: Strikes across Iran and the Middle East"
+   URL: https://www.bbc.com/news/articles/c4g0pnnj8xyo
+
+6. Regional Impact
+   Title: "Allies of US in the Gulf bear brunt of Iran attacks"
+   URL: https://www.bbc.com/news/articles/c1jk922dgjgo
+
+7. Political Analysis
+   Title: "Chris Mason: Trump calls Starmer as US and Europe diverge on Iran strikes"
+   URL: https://www.bbc.com/news/articles/c8eg97x5446o
+
+================================================================================
+REPORT STRUCTURE:
+
+1. Executive Summary
+   - Military escalation overview
+   - UK policy decision
+   - Energy market impact
+   - Geopolitical implications
+   - Western nations' response
+
+2. Political Impact Analysis
+   - International alliance restructuring
+   - UK policy shift and military cooperation
+   - Iran's regional military actions
+   - Western legal and diplomatic stance
+   - Nuclear weapons concerns
+
+3. Economic Impact Analysis
+   - Oil price volatility and Strait of Hormuz threats
+   - Global energy security implications
+   - Trade disruption in Middle East
+   - Investment confidence decline
+   - British citizens and economic interests
+
+4. Risk Outlook and Prospects
+   - Escalation scenarios
+   - Economic recession risks
+   - Humanitarian crisis potential
+   - Nuclear proliferation threats
+   - International diplomatic divisions
+
+5. Impact Comparison Table
+   - Political vs Economic dimensions
+   - Energy sector analysis
+   - Trade and shipping impacts
+   - Investment climate changes
+
+================================================================================
+KEY STATISTICS FROM BBC SOURCES:
+
+- British Citizens at Risk: 200,000 (residents, tourists, transit passengers)
+- Military Bases Involved: RAF Fairford (UK), Diego Garcia (Indian Ocean)
+- Oil Price Impact: Significant surge following Strait of Hormuz attacks
+- Conflict Duration: Ongoing escalation from March 1, 2026
+- Regional Scope: Gulf states, Iraq, Bahrain, UAE, Qatar, Kuwait
+
+================================================================================
+REPORT DELIVERABLE:
+
+File: iran_bbc_report.pptx
+Format: PowerPoint Presentation
+Slides: 7 comprehensive slides
+- Title slide with BBC attribution
+- Executive summary
+- Political impact analysis
+- Economic impact analysis
+- Risk outlook and prospects
+- Impact comparison table
+- BBC sources documentation
+
+File Size: 36 KB
+Created: March 2, 2026
+Location: /Users/federerx/Desktop/ui-tars/
+
+================================================================================
+METHODOLOGY:
+
+This report was compiled exclusively from BBC News sources as of March 2, 2026.
+All information has been verified against BBC's official reporting and includes
+direct citations with URLs for source verification. The analysis focuses on:
+
+1. Official statements from UK government officials
+2. BBC's independent reporting on military operations
+3. Energy market analysis from BBC Business section
+4. Humanitarian impact reporting
+5. Geopolitical analysis from BBC correspondents
+
+================================================================================

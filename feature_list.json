@@ -1,0 +1,124 @@
+{
+  "features": [
+    {
+      "id": "P1-F1",
+      "title": "工作流模板 DSL 规范",
+      "description": "定义 JSON Schema，包含 stages, actions, skills 结构",
+      "phase": 1,
+      "priority": "P0",
+      "passes": false
+    },
+    {
+      "id": "P1-F2",
+      "title": "工作流引擎核心",
+      "description": "实现模板解析器、执行器、版本管理器",
+      "phase": 1,
+      "priority": "P0",
+      "passes": false
+    },
+    {
+      "id": "P1-F3",
+      "title": "技能系统框架",
+      "description": "实现技能加载器、依赖解析、热更新机制",
+      "phase": 1,
+      "priority": "P0",
+      "passes": false
+    },
+    {
+      "id": "P1-F4",
+      "title": "配置管理模块",
+      "description": "实现 workflow.config.json 解析器，与现有配置兼容",
+      "phase": 1,
+      "priority": "P0",
+      "passes": false
+    },
+    {
+      "id": "P1-F5",
+      "title": "项目结构重构",
+      "description": "创建目录结构: workflows/, skills/, reports/, workspace/",
+      "phase": 1,
+      "priority": "P0",
+      "passes": false
+    },
+    {
+      "id": "P2-F1",
+      "title": "多风格 HTML 报告生成器",
+      "description": "支持体育、娱乐、财经、政治、军事 5 种专业视觉风格 + 自定义风格",
+      "phase": 2,
+      "priority": "P0",
+      "passes": false
+    },
+    {
+      "id": "P2-F2",
+      "title": "PDF 转换器",
+      "description": "使用 Puppeteer/Playwright 实现 HTML 到 PDF 高保真导出",
+      "phase": 2,
+      "priority": "P0",
+      "passes": false
+    },
+    {
+      "id": "P2-F3",
+      "title": "PPT 转换器",
+      "description": "使用 PptxGenJS/Officegen 实现 HTML 到 PPT 导出，支持图表/图片",
+      "phase": 2,
+      "priority": "P0",
+      "passes": false
+    },
+    {
+      "id": "P2-F4",
+      "title": "浏览器操作增强",
+      "description": "智能元素定位、复杂表单处理、文件上传下载、滚动控制、截图录屏",
+      "phase": 2,
+      "priority": "P0",
+      "passes": false
+    },
+    {
+      "id": "P2-F5",
+      "title": "网络检索增强模块",
+      "description": "多源聚合、结果缓存、智能重试、检索质量优化",
+      "phase": 2,
+      "priority": "P0",
+      "passes": false
+    },
+    {
+      "id": "P3-F1",
+      "title": "Office 文档处理",
+      "description": "Word/Excel 读取、编辑、生成，使用 Docx.js + ExcelJS",
+      "phase": 3,
+      "priority": "P1",
+      "passes": false
+    },
+    {
+      "id": "P3-F2",
+      "title": "邮件处理模块",
+      "description": "IMAP/SMTP 集成，自动邮件分类、回复生成、发送",
+      "phase": 3,
+      "priority": "P1",
+      "passes": false
+    },
+    {
+      "id": "P3-F3",
+      "title": "性能优化",
+      "description": "缓存机制、并行执行、增量更新优化",
+      "phase": 3,
+      "priority": "P1",
+      "passes": false
+    },
+    {
+      "id": "P3-F4",
+      "title": "监控与日志系统",
+      "description": "运行状态监控、错误追踪、日志管理",
+      "phase": 3,
+      "priority": "P1",
+      "passes": false
+    },
+    {
+      "id": "P3-F5",
+      "title": "文档与示例",
+      "description": "API 文档、使用示例、5+ 开箱即用模板",
+      "phase": 3,
+      "priority": "P1",
+      "passes": false
+    }
+  ]
+}
