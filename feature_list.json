@@ -46,7 +46,7 @@
       "description": "支持体育、娱乐、财经、政治、军事 5 种专业视觉风格 + 自定义风格",
       "phase": 2,
       "priority": "P0",
-      "passes": false
+      "passes": true
     },
     {
       "id": "P2-F2",
