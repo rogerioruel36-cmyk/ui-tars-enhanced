@@ -78,7 +78,7 @@
       "description": "多源聚合、结果缓存、智能重试、检索质量优化",
       "phase": 2,
       "priority": "P0",
-      "passes": false
+      "passes": true
     },
     {
       "id": "P3-F1",
