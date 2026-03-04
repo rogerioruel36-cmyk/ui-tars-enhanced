@@ -38,7 +38,7 @@
       "description": "创建目录结构: workflows/, skills/, reports/, workspace/",
       "phase": 1,
       "priority": "P0",
-      "passes": false
+      "passes": true
     },
     {
       "id": "P2-F1",
