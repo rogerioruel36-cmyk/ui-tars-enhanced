@@ -11,7 +11,8 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "@agent-tars/cli": "^0.3.0"
+    "@agent-tars/cli": "^0.3.0",
+    "puppeteer": "^24.38.0"
   },
   "devDependencies": {
     "ajv": "^8.18.0",

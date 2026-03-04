@@ -54,7 +54,7 @@
       "description": "使用 Puppeteer/Playwright 实现 HTML 到 PDF 高保真导出",
       "phase": 2,
       "priority": "P0",
-      "passes": false
+      "passes": true
     },
     {
       "id": "P2-F3",

@@ -8,19 +8,20 @@
 - **Timeline**: 14-20 weeks (4-5 months)
 
 ## Current Status
-**Phase 2 in Progress** - 1/5 features completed
+**Phase 2 in Progress** - 2/5 features completed
 
 ## Next Step
-Continue with P2-F2: PDF 转换器
+Continue with P2-F3: PPT 转换器
 
 ## Recently Completed
+- P2-F2: PDF 转换器
 - P2-F1: 多风格 HTML 报告生成器
 
 ## Feature Progress
 | Phase | Features | Status |
 |-------|----------|--------|
 | Phase 1 (基础能力建设) | 5 features | Complete |
-| Phase 2 (核心功能实现) | 1/5 complete | In Progress |
+| Phase 2 (核心功能实现) | 2/5 complete | In Progress |
 | Phase 3 (高级功能与优化) | 5 features | Pending |
 
 ## Known Risks
