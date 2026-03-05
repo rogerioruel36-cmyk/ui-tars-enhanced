@@ -12,8 +12,10 @@
   "type": "commonjs",
   "dependencies": {
     "@agent-tars/cli": "^0.3.0",
+    "cors": "^2.8.6",
     "docx": "^9.6.0",
     "exceljs": "^4.4.0",
+    "express": "^5.2.1",
     "imap": "^0.8.19",
     "mailparser": "^3.9.3",
     "nodemailer": "^8.0.1",
