@@ -1,0 +1,251 @@
+{
+  "version": "1.0.0",
+  "name": "email-automation",
+  "description": "Automated email processing with classification, routing, and auto-reply",
+  "metadata": {
+    "author": "UI-TARS Team",
+    "created": "2026-03-05T00:00:00Z",
+    "tags": ["email", "automation", "imap", "smtp"],
+    "category": "automation"
+  },
+  "config": {
+    "timeout": 300000,
+    "retry": 2
+  },
+  "variables": {
+    "imap": {
+      "type": "object",
+      "value": {
+        "host": "imap.example.com",
+        "port": 993,
+        "user": "user@example.com",
+        "password": "${IMAP_PASSWORD}"
+      }
+    },
+    "smtp": {
+      "type": "object",
+      "value": {
+        "host": "smtp.example.com",
+        "port": 465,
+        "user": "user@example.com",
+        "password": "${SMTP_PASSWORD}"
+      }
+    },
+    "checkInterval": {
+      "type": "number",
+      "value": 300000
+    }
+  },
+  "skills": [
+    {
+      "name": "email-classifier",
+      "version": "1.0.0",
+      "source": "local",
+      "path": "./skills/email-classifier"
+    }
+  ],
+  "stages": [
+    {
+      "id": "connect",
+      "name": "Connect to Email Servers",
+      "description": "Establish IMAP and SMTP connections",
+      "actions": [
+        {
+          "id": "connect-imap",
+          "type": "skill",
+          "skill": "imap-connect",
+          "skillParams": {
+            "host": "{{imap.host}}",
+            "port": "{{imap.port}}",
+            "user": "{{imap.user}}",
+            "password": "{{imap.password}}"
+          },
+          "output": "imapConnection"
+        },
+        {
+          "id": "connect-smtp",
+          "type": "skill",
+          "skill": "smtp-connect",
+          "skillParams": {
+            "host": "{{smtp.host}}",
+            "port": "{{smtp.port}}",
+            "user": "{{smtp.user}}",
+            "password": "{{smtp.password}}"
+          },
+          "output": "smtpConnection"
+        }
+      ]
+    },
+    {
+      "id": "fetch-emails",
+      "name": "Fetch Unread Emails",
+      "description": "Retrieve unread emails from inbox",
+      "actions": [
+        {
+          "id": "select-inbox",
+          "type": "skill",
+          "skill": "imap-select",
+          "skillParams": {
+            "folder": "INBOX"
+          }
+        },
+        {
+          "id": "fetch-unread",
+          "type": "skill",
+          "skill": "imap-fetch",
+          "skillParams": {
+            "criteria": "UNSEEN",
+            "limit": 50
+          },
+          "output": "emails"
+        }
+      ]
+    },
+    {
+      "id": "classify-emails",
+      "name": "Classify Emails",
+      "description": "Categorize emails using ML classifier",
+      "actions": [
+        {
+          "id": "classify",
+          "type": "skill",
+          "skill": "email-classifier",
+          "skillParams": {
+            "emails": "{{emails}}"
+          },
+          "output": "classifiedEmails"
+        }
+      ]
+    },
+    {
+      "id": "process-emails",
+      "name": "Process by Category",
+      "description": "Process emails based on their category",
+      "actions": [
+        {
+          "id": "process-work",
+          "type": "condition",
+          "condition": "{{classifiedEmails.work.length}} > 0",
+          "onSuccess": {
+            "action": "process-work-emails"
+          }
+        },
+        {
+          "id": "process-work-emails",
+          "type": "loop",
+          "loop": {
+            "over": "{{classifiedEmails.work}}"
+          },
+          "actions": [
+            {
+              "id": "move-to-work",
+              "type": "skill",
+              "skill": "imap-move",
+              "skillParams": {
+                "uid": "{{item.uid}}",
+                "folder": "Work"
+              }
+            }
+          ]
+        },
+        {
+          "id": "process-promotions",
+          "type": "loop",
+          "loop": {
+            "over": "{{classifiedEmails.promotions}}"
+          },
+          "actions": [
+            {
+              "id": "move-to-promotions",
+              "type": "skill",
+              "skill": "imap-move",
+              "skillParams": {
+                "uid": "{{item.uid}}",
+                "folder": "Promotions"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "auto-reply",
+      "name": "Generate Auto-Replies",
+      "description": "Generate and send auto-replies for applicable emails",
+      "actions": [
+        {
+          "id": "generate-replies",
+          "type": "skill",
+          "skill": "auto-reply-generator",
+          "skillParams": {
+            "emails": "{{classifiedEmails}}",
+            "rules": [
+              {
+                "category": "urgent",
+                "responseTime": 0,
+                "template": "Thank you for your urgent message. We will respond immediately."
+              },
+              {
+                "category": "inquiry",
+                "responseTime": 3600,
+                "template": "Thank you for your inquiry. We will respond within 24 hours."
+              }
+            ]
+          },
+          "output": "replies"
+        }
+      ]
+    },
+    {
+      "id": "send-replies",
+      "name": "Send Replies",
+      "description": "Send generated auto-replies via SMTP",
+      "actions": [
+        {
+          "id": "send-loop",
+          "type": "loop",
+          "loop": {
+            "over": "{{replies}}"
+          },
+          "actions": [
+            {
+              "id": "send-reply",
+              "type": "skill",
+              "skill": "smtp-send",
+              "skillParams": {
+                "from": "{{smtp.user}}",
+                "to": "{{item.to}}",
+                "subject": "{{item.subject}}",
+                "body": "{{item.body}}"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "disconnect",
+      "name": "Disconnect",
+      "description": "Close email connections",
+      "actions": [
+        {
+          "id": "disconnect-imap",
+          "type": "skill",
+          "skill": "imap-disconnect"
+        },
+        {
+          "id": "disconnect-smtp",
+          "type": "skill",
+          "skill": "smtp-disconnect"
+        }
+      ]
+    }
+  ],
+  "errors": {
+    "retry": {
+      "maxAttempts": 2,
+      "delay": 5000
+    },
+    "continueOnError": true
+  }
+}

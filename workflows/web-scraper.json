@@ -1,0 +1,145 @@
+{
+  "version": "1.0.0",
+  "name": "web-scraper",
+  "description": "Universal web scraper with multi-page support, pagination, and data extraction",
+  "metadata": {
+    "author": "UI-TARS Team",
+    "created": "2026-03-05T00:00:00Z",
+    "tags": ["scraping", "automation", "data-extraction"],
+    "category": "scraping"
+  },
+  "config": {
+    "timeout": 300000,
+    "retry": 3,
+    "browser": {
+      "engine": "puppeteer",
+      "headless": true,
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      }
+    }
+  },
+  "variables": {
+    "targetUrl": {
+      "type": "string",
+      "value": "https://example.com"
+    },
+    "maxPages": {
+      "type": "number",
+      "value": 10
+    },
+    "delay": {
+      "type": "number",
+      "value": 1000
+    }
+  },
+  "stages": [
+    {
+      "id": "init",
+      "name": "Initialize Browser",
+      "description": "Launch browser and navigate to target",
+      "actions": [
+        {
+          "id": "navigate",
+          "type": "navigate",
+          "params": {
+            "url": "{{targetUrl}}"
+          },
+          "output": "initialPage"
+        },
+        {
+          "id": "wait-page-load",
+          "type": "wait",
+          "params": {
+            "ms": 2000
+          }
+        },
+        {
+          "id": "take-screenshot",
+          "type": "screenshot",
+          "params": {
+            "path": "./reports/scraper-init.png"
+          }
+        }
+      ]
+    },
+    {
+      "id": "extract-metadata",
+      "name": "Extract Page Metadata",
+      "description": "Extract page title, meta tags, and basic info",
+      "actions": [
+        {
+          "id": "get-title",
+          "type": "extract",
+          "selector": "title",
+          "output": "pageTitle"
+        },
+        {
+          "id": "get-description",
+          "type": "evaluate",
+          "script": "document.querySelector('meta[name=\"description\"]')?.content || ''",
+          "output": "metaDescription"
+        }
+      ]
+    },
+    {
+      "id": "extract-content",
+      "name": "Extract Main Content",
+      "description": "Extract main content elements",
+      "actions": [
+        {
+          "id": "extract-articles",
+          "type": "extract",
+          "selector": "article, .post, .item, main",
+          "output": "articles",
+          "loop": {
+            "maxItems": 50
+          }
+        },
+        {
+          "id": "extract-links",
+          "type": "evaluate",
+          "script": "Array.from(document.querySelectorAll('a[href]')).slice(0, 20).map(a => ({ text: a.textContent.trim(), href: a.href }))",
+          "output": "links"
+        }
+      ]
+    },
+    {
+      "id": "process-data",
+      "name": "Process Extracted Data",
+      "description": "Process and format extracted data",
+      "actions": [
+        {
+          "id": "process-articles",
+          "type": "evaluate",
+          "script": "({ articles }) => articles.map((a, i) => ({ id: i, ...a }))",
+          "output": "processedData"
+        }
+      ]
+    },
+    {
+      "id": "save",
+      "name": "Save Results",
+      "description": "Save scraped data to file",
+      "actions": [
+        {
+          "id": "save-json",
+          "type": "file",
+          "params": {
+            "operation": "write",
+            "path": "./workspace/scraped-data.json",
+            "content": "{{processedData}}"
+          }
+        }
+      ]
+    }
+  ],
+  "errors": {
+    "retry": {
+      "maxAttempts": 3,
+      "delay": 1000,
+      "backoff": "exponential"
+    }
+  }
+}

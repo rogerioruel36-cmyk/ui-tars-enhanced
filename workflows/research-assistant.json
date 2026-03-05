@@ -1,0 +1,232 @@
+{
+  "version": "1.0.0",
+  "name": "research-assistant",
+  "description": "Comprehensive research workflow with multi-source search, content extraction, and analysis",
+  "metadata": {
+    "author": "UI-TARS Team",
+    "created": "2026-03-05T00:00:00Z",
+    "tags": ["research", "ai", "analysis", "automation"],
+    "category": "research"
+  },
+  "config": {
+    "timeout": 600000,
+    "retry": 2,
+    "parallel": true,
+    "browser": {
+      "engine": "puppeteer",
+      "headless": true,
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      }
+    }
+  },
+  "variables": {
+    "topic": {
+      "type": "string",
+      "value": "artificial intelligence trends 2026"
+    },
+    "sources": {
+      "type": "array",
+      "value": ["google", "news", "academic", "bing"]
+    },
+    "maxResults": {
+      "type": "number",
+      "value": 30
+    },
+    "analysisDepth": {
+      "type": "string",
+      "value": "comprehensive"
+    }
+  },
+  "skills": [
+    {
+      "name": "content-extractor",
+      "version": "1.0.0",
+      "source": "local",
+      "path": "./skills/content-extractor"
+    },
+    {
+      "name": "text-analyzer",
+      "version": "1.0.0",
+      "source": "local",
+      "path": "./skills/text-analyzer"
+    }
+  ],
+  "stages": [
+    {
+      "id": "initial-research",
+      "name": "Multi-Source Search",
+      "description": "Search multiple sources for topic information",
+      "actions": [
+        {
+          "id": "parallel-search",
+          "type": "parallel",
+          "params": {
+            "tasks": [
+              {
+                "type": "search",
+                "params": {
+                  "query": "{{topic}}",
+                  "sources": ["google"],
+                  "limit": "{{maxResults}}"
+                }
+              },
+              {
+                "type": "search",
+                "params": {
+                  "query": "{{topic}} latest news",
+                  "sources": ["news"],
+                  "limit": 15
+                }
+              },
+              {
+                "type": "search",
+                "params": {
+                  "query": "{{topic}} academic research",
+                  "sources": ["academic"],
+                  "limit": 10
+                }
+              }
+            ]
+          },
+          "output": "searchResults"
+        }
+      ]
+    },
+    {
+      "id": "filter-sources",
+      "name": "Filter and Prioritize Sources",
+      "description": "Filter results by quality and relevance",
+      "actions": [
+        {
+          "id": "filter",
+          "type": "evaluate",
+          "script": "({ searchResults }) => {\n  const allResults = searchResults.flatMap(r => r.results);\n  // Remove duplicates\n  const unique = [...new Map(allResults.map(r => [r.url, r])).values()];\n  // Sort by score\n  return unique.sort((a, b) => b.score - a.score).slice(0, 20);\n}",
+          "output": "filteredSources"
+        }
+      ]
+    },
+    {
+      "id": "extract-content",
+      "name": "Extract Content",
+      "description": "Fetch and extract content from top sources",
+      "actions": [
+        {
+          "id": "extract",
+          "type": "skill",
+          "skill": "content-extractor",
+          "skillParams": {
+            "urls": "{{filteredSources[*].url}}",
+            "maxItems": 15,
+            "extract": ["title", "content", "metadata"]
+          },
+          "output": "extractedContent"
+        }
+      ]
+    },
+    {
+      "id": "analyze",
+      "name": "Analyze Content",
+      "description": "Perform deep analysis on extracted content",
+      "actions": [
+        {
+          "id": "extract-key-points",
+          "type": "skill",
+          "skill": "text-analyzer",
+          "skillParams": {
+            "content": "{{extractedContent}}",
+            "analysis": {
+              "keyPoints": true,
+              "sentiment": true,
+              "entities": true,
+              "summary": true
+            }
+          },
+          "output": "analysis"
+        }
+      ]
+    },
+    {
+      "id": "generate-report",
+      "name": "Generate Report",
+      "description": "Create comprehensive research report",
+      "actions": [
+        {
+          "id": "create-report",
+          "type": "skill",
+          "skill": "report-generator",
+          "skillParams": {
+            "title": "{{topic}}",
+            "style": "professional",
+            "sections": [
+              {
+                "heading": "Executive Summary",
+                "content": "{{analysis.summary}}"
+              },
+              {
+                "heading": "Key Findings",
+                "content": "{{analysis.keyPoints}}"
+              },
+              {
+                "heading": "Sentiment Analysis",
+                "content": "{{analysis.sentiment}}"
+              },
+              {
+                "heading": "Key Entities",
+                "content": "{{analysis.entities}}"
+              },
+              {
+                "heading": "Sources",
+                "content": "{{filteredSources}}"
+              }
+            ]
+          },
+          "output": "report"
+        }
+      ]
+    },
+    {
+      "id": "export",
+      "name": "Export Results",
+      "description": "Save research results in multiple formats",
+      "actions": [
+        {
+          "id": "save-markdown",
+          "type": "file",
+          "params": {
+            "operation": "write",
+            "path": "./reports/research-{{topic}}.md",
+            "content": "{{report.markdown}}"
+          }
+        },
+        {
+          "id": "save-data",
+          "type": "file",
+          "params": {
+            "operation": "write",
+            "path": "./workspace/research-data.json",
+            "content": {
+              "topic": "{{topic}}",
+              "analysis": "{{analysis}}",
+              "sources": "{{filteredSources}}",
+              "timestamp": "${DATE}"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "errors": {
+    "retry": {
+      "maxAttempts": 2,
+      "delay": 2000,
+      "backoff": "exponential"
+    },
+    "continueOnError": true,
+    "notify": {
+      "on": ["error"],
+      "channel": "console"
+    }
+  }
+}

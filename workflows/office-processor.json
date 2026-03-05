@@ -1,0 +1,222 @@
+{
+  "version": "1.0.0",
+  "name": "office-processor",
+  "description": "Process Word and Excel documents with reading, editing, and generation capabilities",
+  "metadata": {
+    "author": "UI-TARS Team",
+    "created": "2026-03-05T00:00:00Z",
+    "tags": ["office", "word", "excel", "document"],
+    "category": "automation"
+  },
+  "config": {
+    "timeout": 300000,
+    "retry": 2
+  },
+  "variables": {
+    "inputWord": {
+      "type": "string",
+      "value": "./documents/template.docx"
+    },
+    "inputExcel": {
+      "type": "string",
+      "value": "./documents/data.xlsx"
+    },
+    "outputDir": {
+      "type": "string",
+      "value": "./reports"
+    }
+  },
+  "skills": [
+    {
+      "name": "word-processor",
+      "version": "1.0.0",
+      "source": "local",
+      "path": "./skills/word-processor"
+    },
+    {
+      "name": "excel-processor",
+      "version": "1.0.0",
+      "source": "local",
+      "path": "./skills/excel-processor"
+    }
+  ],
+  "stages": [
+    {
+      "id": "read-word",
+      "name": "Read Word Document",
+      "description": "Load and extract content from Word document",
+      "actions": [
+        {
+          "id": "load-word",
+          "type": "skill",
+          "skill": "word-load",
+          "skillParams": {
+            "path": "{{inputWord}}"
+          },
+          "output": "wordDoc"
+        },
+        {
+          "id": "extract-text",
+          "type": "skill",
+          "skill": "word-extract",
+          "skillParams": {
+            "document": "{{wordDoc}}",
+            "elements": ["paragraphs", "tables", "headings"]
+          },
+          "output": "wordContent"
+        }
+      ]
+    },
+    {
+      "id": "read-excel",
+      "name": "Read Excel Spreadsheet",
+      "description": "Load and extract data from Excel file",
+      "actions": [
+        {
+          "id": "load-excel",
+          "type": "skill",
+          "skill": "excel-load",
+          "skillParams": {
+            "path": "{{inputExcel}}"
+          },
+          "output": "excelDoc"
+        },
+        {
+          "id": "get-sheets",
+          "type": "skill",
+          "skill": "excel-get-sheets",
+          "skillParams": {
+            "document": "{{excelDoc}}"
+          },
+          "output": "sheets"
+        },
+        {
+          "id": "extract-data",
+          "type": "skill",
+          "skill": "excel-read",
+          "skillParams": {
+            "document": "{{excelDoc}}",
+            "sheets": "{{sheets}}"
+          },
+          "output": "excelData"
+        }
+      ]
+    },
+    {
+      "id": "process-data",
+      "name": "Process Data",
+      "description": "Process and analyze extracted data",
+      "actions": [
+        {
+          "id": "analyze-excel",
+          "type": "evaluate",
+          "script": "({ excelData }) => {\n  const processed = {};\n  for (const [sheetName, data] of Object.entries(excelData)) {\n    const rows = data.rows || [];\n    const headers = rows[0] || [];\n    const values = rows.slice(1);\n    processed[sheetName] = {\n      headers,\n      rowCount: values.length,\n      data: values,\n      summary: {\n        totalRows: values.length,\n        totalColumns: headers.length\n      }\n    };\n  }\n  return processed;\n}",
+          "output": "processedData"
+        }
+      ]
+    },
+    {
+      "id": "generate-word",
+      "name": "Generate Word Report",
+      "description": "Create new Word document with processed data",
+      "actions": [
+        {
+          "id": "create-word",
+          "type": "skill",
+          "skill": "word-create",
+          "skillParams": {
+            "title": "Data Analysis Report"
+          },
+          "output": "newWordDoc"
+        },
+        {
+          "id": "add-heading",
+          "type": "skill",
+          "skill": "word-add-heading",
+          "skillParams": {
+            "document": "{{newWordDoc}}",
+            "text": "Data Analysis Results",
+            "level": 1
+          }
+        },
+        {
+          "id": "add-content",
+          "type": "skill",
+          "skill": "word-add-paragraph",
+          "skillParams": {
+            "document": "{{newWordDoc}}",
+            "text": "This report contains analysis of the input data.",
+            "format": { "bold": true }
+          }
+        },
+        {
+          "id": "add-table",
+          "type": "skill",
+          "skill": "word-add-table",
+          "skillParams": {
+            "document": "{{newWordDoc}}",
+            "data": {
+              "headers": ["Sheet", "Rows", "Columns"],
+              "rows": "{{processedData}}"
+            }
+          }
+        },
+        {
+          "id": "save-word",
+          "type": "skill",
+          "skill": "word-save",
+          "skillParams": {
+            "document": "{{newWordDoc}}",
+            "path": "./reports/analysis-report.docx"
+          }
+        }
+      ]
+    },
+    {
+      "id": "generate-excel",
+      "name": "Generate Excel Report",
+      "description": "Create new Excel workbook with analysis",
+      "actions": [
+        {
+          "id": "create-excel",
+          "type": "skill",
+          "skill": "excel-create",
+          "skillParams": {
+            "sheets": ["Summary", "Details"]
+          },
+          "output": "newExcelDoc"
+        },
+        {
+          "id": "write-summary",
+          "type": "skill",
+          "skill": "excel-write",
+          "skillParams": {
+            "document": "{{newExcelDoc}}",
+            "sheet": "Summary",
+            "data": [
+              ["Metric", "Value"],
+              ["Total Sheets", "{{processedData.length}}"],
+              ["Total Rows", "{{processedData.*.summary.totalRows}}"]
+            ]
+          }
+        },
+        {
+          "id": "save-excel",
+          "type": "skill",
+          "skill": "excel-save",
+          "skillParams": {
+            "document": "{{newExcelDoc}}",
+            "path": "./reports/analysis-data.xlsx"
+          }
+        }
+      ]
+    }
+  ],
+  "errors": {
+    "retry": {
+      "maxAttempts": 2,
+      "delay": 1000
+    },
+    "continueOnError": true
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "version": "1.0.0",
+  "name": "report-generator",
+  "description": "Generate professional reports from research data with multiple output formats",
+  "metadata": {
+    "author": "UI-TARS Team",
+    "created": "2026-03-05T00:00:00Z",
+    "tags": ["reporting", "automation", "pdf", "ppt"],
+    "category": "reporting"
+  },
+  "config": {
+    "timeout": 300000,
+    "retry": 2,
+    "browser": {
+      "engine": "puppeteer",
+      "headless": true,
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      }
+    }
+  },
+  "variables": {
+    "reportTitle": {
+      "type": "string",
+      "value": "Research Report"
+    },
+    "style": {
+      "type": "string",
+      "value": "professional"
+    },
+    "outputDir": {
+      "type": "string",
+      "value": "./reports"
+    }
+  },
+  "skills": [
+    {
+      "name": "report-generator",
+      "version": "1.0.0",
+      "source": "local",
+      "path": "./skills/report-generator"
+    }
+  ],
+  "stages": [
+    {
+      "id": "collect-data",
+      "name": "Collect Research Data",
+      "description": "Gather data from multiple sources",
+      "actions": [
+        {
+          "id": "search-topic",
+          "type": "search",
+          "params": {
+            "query": "{{topic}}",
+            "sources": ["google", "news"],
+            "limit": 20
+          },
+          "output": "searchResults"
+        },
+        {
+          "id": "fetch-details",
+          "type": "skill",
+          "skill": "content-fetcher",
+          "skillParams": {
+            "urls": "{{searchResults[*].url}}",
+            "maxItems": 10
+          },
+          "output": "content"
+        }
+      ]
+    },
+    {
+      "id": "analyze-data",
+      "name": "Analyze Data",
+      "description": "Process and analyze collected data",
+      "actions": [
+        {
+          "id": "extract-key-points",
+          "type": "skill",
+          "skill": "text-analyzer",
+          "skillParams": {
+            "content": "{{content}}",
+            "maxPoints": 10
+          },
+          "output": "analysis"
+        }
+      ]
+    },
+    {
+      "id": "generate-html",
+      "name": "Generate HTML Report",
+      "description": "Create HTML report with selected style",
+      "actions": [
+        {
+          "id": "create-report",
+          "type": "skill",
+          "skill": "report-generator",
+          "skillParams": {
+            "title": "{{reportTitle}}",
+            "style": "{{style}}",
+            "sections": [
+              {
+                "heading": "Executive Summary",
+                "content": "{{analysis.summary}}"
+              },
+              {
+                "heading": "Key Findings",
+                "content": "{{analysis.keyPoints}}"
+              },
+              {
+                "heading": "Sources",
+                "content": "{{searchResults}}"
+              }
+            ]
+          },
+          "output": "htmlReport"
+        }
+      ]
+    },
+    {
+      "id": "convert-pdf",
+      "name": "Convert to PDF",
+      "description": "Export report as PDF",
+      "actions": [
+        {
+          "id": "convert",
+          "type": "http",
+          "params": {
+            "url": "http://localhost:3000/api/convert/pdf",
+            "method": "POST",
+            "body": {
+              "html": "{{htmlReport}}",
+              "options": {
+                "format": "A4",
+                "margin": "10mm"
+              }
+            }
+          },
+          "output": "pdfReport"
+        }
+      ]
+    },
+    {
+      "id": "convert-ppt",
+      "name": "Convert to PPT",
+      "description": "Export report as PowerPoint",
+      "actions": [
+        {
+          "id": "convert-ppt",
+          "type": "http",
+          "params": {
+            "url": "http://localhost:3000/api/convert/ppt",
+            "method": "POST",
+            "body": {
+              "html": "{{htmlReport}}"
+            }
+          },
+          "output": "pptReport"
+        }
+      ]
+    },
+    {
+      "id": "save",
+      "name": "Save Reports",
+      "description": "Save all output files",
+      "actions": [
+        {
+          "id": "save-html",
+          "type": "file",
+          "params": {
+            "operation": "write",
+            "path": "./reports/{{reportTitle}}.html",
+            "content": "{{htmlReport}}"
+          }
+        }
+      ]
+    }
+  ],
+  "errors": {
+    "retry": {
+      "maxAttempts": 2,
+      "delay": 1000
+    },
+    "continueOnError": true
+  }
+}

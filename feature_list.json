@@ -118,7 +118,7 @@
       "description": "API 文档、使用示例、5+ 开箱即用模板",
       "phase": 3,
       "priority": "P1",
-      "passes": false
+      "passes": true
     }
   ]
 }
