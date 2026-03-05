@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI-TARS Enhanced Features</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      min-height: 100vh;
+      color: #f3f4f6;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 40px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    header p {
+      opacity: 0.9;
+      font-size: 1.1em;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    @media (max-width: 1024px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .panel h2 {
+      font-size: 1.5em;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel h2::before {
+      content: '';
+      width: 4px;
+      height: 24px;
+      background: linear-gradient(180deg, #667eea, #764ba2);
+      border-radius: 2px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #9ca3af;
+      font-size: 0.9em;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 14px 18px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      font-size: 1em;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #667eea;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .style-selector {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .style-option {
+      position: relative;
+    }
+
+    .style-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .style-option label {
+      display: block;
+      padding: 16px 10px;
+      text-align: center;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: none;
+      font-size: 0.85em;
+      border: 2px solid transparent;
+    }
+
+    .style-option input:checked + label {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .style-sports label { background: linear-gradient(135deg, #FF6B35, #F7C548); color: #1a1a2e; }
+    .style-sports input:checked + label { border-color: #FF6B35; }
+
+    .style-entertainment label { background: linear-gradient(135deg, #FF1493, #9400D3); color: #fff; }
+    .style-entertainment input:checked + label { border-color: #FF1493; }
+
+    .style-finance label { background: linear-gradient(135deg, #0D47A1, #1565C0); color: #fff; }
+    .style-finance input:checked + label { border-color: #0D47A1; }
+
+    .style-politics label { background: linear-gradient(135deg, #8B0000, #1A1A2E); color: #fff; }
+    .style-politics input:checked + label { border-color: #8B0000; }
+
+    .style-military label { background: linear-gradient(135deg, #2E5A1C, #C4B538); color: #fff; }
+    .style-military input:checked + label { border-color: #C4B538; }
+
+    .format-toggles {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .format-toggle {
+      position: relative;
+    }
+
+    .format-toggle input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .format-toggle label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      text-transform: none;
+    }
+
+    .format-toggle label:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .format-toggle input:checked + label {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-color: #667eea;
+    }
+
+    .format-toggle label .icon {
+      font-size: 1.2em;
+    }
+
+    select {
+      width: 100%;
+      padding: 14px 18px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    select option {
+      background: #1a1a2e;
+      color: #fff;
+    }
+
+    .run-btn {
+      width: 100%;
+      padding: 18px 30px;
+      font-size: 1.2em;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    }
+
+    .run-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+    }
+
+    .run-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .run-btn.running {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+
+    /* Logs Panel */
+    .logs-panel {
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    .logs-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .logs-clear {
+      padding: 8px 16px;
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      color: #ef4444;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85em;
+      transition: all 0.3s ease;
+    }
+
+    .logs-clear:hover {
+      background: rgba(239, 68, 68, 0.3);
+    }
+
+    .log-entry {
+      padding: 14px 18px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 4px solid;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .log-entry.info { border-color: #3b82f6; }
+    .log-entry.success { border-color: #10b981; }
+    .log-entry.warning { border-color: #f59e0b; }
+    .log-entry.error { border-color: #ef4444; }
+
+    .log-entry .time {
+      font-size: 0.75em;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    .log-entry .message {
+      font-size: 0.95em;
+    }
+
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85em;
+      margin-bottom: 20px;
+    }
+
+    .status-indicator.idle {
+      background: rgba(107, 114, 128, 0.2);
+      color: #9ca3af;
+    }
+
+    .status-indicator.running {
+      background: rgba(139, 92, 246, 0.2);
+      color: #a78bfa;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .empty-logs {
+      text-align: center;
+      padding: 60px 20px;
+      color: #6b7280;
+    }
+
+    .empty-logs .icon {
+      font-size: 3em;
+      margin-bottom: 15px;
+      opacity: 0.5;
+    }
+
+    /* Results section */
+    .results-section {
+      margin-top: 30px;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .results-section h3 {
+      margin-bottom: 15px;
+      color: #10b981;
+    }
+
+    .result-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: rgba(16, 185, 129, 0.1);
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    .result-item .icon {
+      font-size: 1.5em;
+    }
+
+    .result-item a {
+      color: #10b981;
+      text-decoration: none;
+    }
+
+    .result-item a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>UI-TARS Enhanced Features</h1>
+      <p>Generate multi-style reports with HTML, PDF, and PPT outputs</p>
+    </header>
+
+    <div class="main-grid">
+      <!-- Configuration Panel -->
+      <div class="panel">
+        <h2>Enhanced Features Panel</h2>
+
+        <div class="form-group">
+          <label>Report Title</label>
+          <input type="text" id="reportTitle" placeholder="Enter report title..." value="My Report">
+        </div>
+
+        <div class="form-group">
+          <label>Report Style</label>
+          <div class="style-selector">
+            <div class="style-option style-sports">
+              <input type="radio" name="style" id="style-sports" value="sports">
+              <label for="style-sports">Sports</label>
+            </div>
+            <div class="style-option style-entertainment">
+              <input type="radio" name="style" id="style-entertainment" value="entertainment">
+              <label for="style-entertainment">Entertainment</label>
+            </div>
+            <div class="style-option style-finance">
+              <input type="radio" name="style" id="style-finance" value="finance" checked>
+              <label for="style-finance">Finance</label>
+            </div>
+            <div class="style-option style-politics">
+              <input type="radio" name="style" id="style-politics" value="politics">
+              <label for="style-politics">Politics</label>
+            </div>
+            <div class="style-option style-military">
+              <input type="radio" name="style" id="style-military" value="military">
+              <label for="style-military">Military</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Output Formats</label>
+          <div class="format-toggles">
+            <div class="format-toggle">
+              <input type="checkbox" id="format-html" value="html" checked>
+              <label for="format-html">
+                <span class="icon">📄</span> HTML
+              </label>
+            </div>
+            <div class="format-toggle">
+              <input type="checkbox" id="format-pdf" value="pdf">
+              <label for="format-pdf">
+                <span class="icon">📕</span> PDF
+              </label>
+            </div>
+            <div class="format-toggle">
+              <input type="checkbox" id="format-ppt" value="ppt">
+              <label for="format-ppt">
+                <span class="icon">📊</span> PPT
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Workflow Template</label>
+          <select id="workflowTemplate">
+            <option value="">Select a workflow template...</option>
+          </select>
+        </div>
+
+        <button class="run-btn" id="runBtn" onclick="runReport()">
+          Run Report Generation
+        </button>
+
+        <div class="results-section" id="resultsSection" style="display: none;">
+          <h3>Generated Files:</h3>
+          <div id="resultsList"></div>
+        </div>
+      </div>
+
+      <!-- Logs Panel -->
+      <div class="panel logs-panel">
+        <h2>Run Logs / Status</h2>
+
+        <div class="status-indicator idle" id="statusIndicator">
+          <span class="status-dot"></span>
+          <span id="statusText">Ready</span>
+        </div>
+
+        <div class="logs-header">
+          <span style="color: #9ca3af; font-size: 0.9em;">Recent Activity</span>
+          <button class="logs-clear" onclick="clearLogs()">Clear Logs</button>
+        </div>
+
+        <div id="logsContainer">
+          <div class="empty-logs">
+            <div class="icon">📋</div>
+            <div>No logs yet. Run a report to see activity.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let isRunning = false;
+    let logs = [];
+    let currentStatus = 'idle';
+
+    // Load workflows on page load
+    async function loadWorkflows() {
+      try {
+        const response = await fetch('/api/workflows');
+        const workflows = await response.json();
+        const select = document.getElementById('workflowTemplate');
+        workflows.forEach(w => {
+          const option = document.createElement('option');
+          option.value = w.id;
+          option.textContent = w.name;
+          select.appendChild(option);
+        });
+      } catch (e) {
+        console.error('Failed to load workflows:', e);
+      }
+    }
+
+    // Load logs periodically
+    async function loadLogs() {
+      try {
+        const response = await fetch('/api/logs');
+        const data = await response.json();
+        logs = data.logs || [];
+        currentStatus = data.status || 'idle';
+        renderLogs();
+        updateStatus();
+      } catch (e) {
+        console.error('Failed to load logs:', e);
+      }
+    }
+
+    function renderLogs() {
+      const container = document.getElementById('logsContainer');
+      if (logs.length === 0) {
+        container.innerHTML = '<div class="empty-logs"><div class="icon">📋</div><div>No logs yet. Run a report to see activity.</div></div>';
+        return;
+      }
+
+      container.innerHTML = logs.map(log => {
+        const time = new Date(log.timestamp).toLocaleTimeString();
+        return '<div class="log-entry ' + log.type + '"><div class="time">' + time + '</div><div class="message">' + log.message + '</div></div>';
+      }).join('');
+    }
+
+    function updateStatus() {
+      const indicator = document.getElementById('statusIndicator');
+      const text = document.getElementById('statusText');
+      const btn = document.getElementById('runBtn');
+
+      if (currentStatus === 'running') {
+        indicator.className = 'status-indicator running';
+        text.textContent = 'Running...';
+        btn.className = 'run-btn running';
+        btn.disabled = true;
+        btn.textContent = 'Generating...';
+      } else {
+        indicator.className = 'status-indicator idle';
+        text.textContent = currentStatus === 'completed' ? 'Completed' : 'Ready';
+        btn.className = 'run-btn';
+        btn.disabled = false;
+        btn.textContent = 'Run Report Generation';
+      }
+    }
+
+    async function runReport() {
+      if (isRunning) return;
+
+      const title = document.getElementById('reportTitle').value || 'My Report';
+      const style = document.querySelector('input[name="style"]:checked')?.value || 'finance';
+
+      const formatCheckboxes = document.querySelectorAll('.format-toggle input:checked');
+      const outputs = Array.from(formatCheckboxes).map(cb => cb.value);
+
+      if (outputs.length === 0) {
+        alert('Please select at least one output format');
+        return;
+      }
+
+      const workflow = document.getElementById('workflowTemplate').value;
+
+      isRunning = true;
+      document.getElementById('resultsSection').style.display = 'none';
+
+      try {
+        const response = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title, style, outputs, workflow })
+        });
+
+        const result = await response.json();
+
+        // Refresh logs after generation
+        await loadLogs();
+
+        if (result.success && result.results) {
+          const resultsSection = document.getElementById('resultsSection');
+          const resultsList = document.getElementById('resultsList');
+
+          const formatIcons = { html: '📄', pdf: '📕', ppt: '📊' };
+
+          // Build results display
+          let resultsHtml = '';
+          if (result.results.html) {
+            const filename = result.results.html.split('/').pop();
+            resultsHtml += '<div class="result-item"><span class="icon">📄</span><a href="/reports/' + filename + '" target="_blank">' + filename + '</a></div>';
+          }
+          if (result.results.pdf) {
+            const filename = result.results.pdf.split('/').pop();
+            resultsHtml += '<div class="result-item"><span class="icon">📕</span><a href="/reports/pdf/' + filename + '" target="_blank">' + filename + '</a></div>';
+          }
+          if (result.results.ppt) {
+            const filename = result.results.ppt.split('/').pop();
+            resultsHtml += '<div class="result-item"><span class="icon">📊</span><a href="/reports/ppt/' + filename + '" target="_blank">' + filename + '</a></div>';
+          }
+
+          resultsList.innerHTML = resultsHtml;
+          resultsSection.style.display = 'block';
+        }
+      } catch (e) {
+        console.error('Error:', e);
+        alert('Failed to generate report: ' + e.message);
+      } finally {
+        isRunning = false;
+        await loadLogs();
+      }
+    }
+
+    async function clearLogs() {
+      logs = [];
+      renderLogs();
+    }
+
+    // Initialize
+    loadWorkflows();
+    loadLogs();
+    setInterval(loadLogs, 2000); // Poll for updates
+  </script>
+</body>
+</html>
