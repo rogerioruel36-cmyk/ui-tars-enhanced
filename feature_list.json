@@ -110,7 +110,7 @@
       "description": "运行状态监控、错误追踪、日志管理",
       "phase": 3,
       "priority": "P1",
-      "passes": false
+      "passes": true
     },
     {
       "id": "P3-F5",
