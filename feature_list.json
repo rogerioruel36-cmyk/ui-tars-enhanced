@@ -86,7 +86,7 @@
       "description": "Word/Excel 读取、编辑、生成，使用 Docx.js + ExcelJS",
       "phase": 3,
       "priority": "P1",
-      "passes": false
+      "passes": true
     },
     {
       "id": "P3-F2",
