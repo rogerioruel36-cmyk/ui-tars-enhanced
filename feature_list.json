@@ -94,7 +94,7 @@
       "description": "IMAP/SMTP 集成，自动邮件分类、回复生成、发送",
       "phase": 3,
       "priority": "P1",
-      "passes": false
+      "passes": true
     },
     {
       "id": "P3-F3",
