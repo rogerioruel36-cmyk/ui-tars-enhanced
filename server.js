@@ -17,9 +17,28 @@ const PPTConverter = require('./src/reports/PPTConverter');
 const app = express();
 const PORT = 3000;
 
+// Custom JSON parser that handles malformed input gracefully
+const jsonParser = express.json({
+  strict: true,
+  reviver: null
+});
+
+// Wrapper that catches JSON parse errors and provides defaults
+app.use((req, res, next) => {
+  const originalJson = express.json();
+  return originalJson(req, res, (err) => {
+    if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+      // Malformed JSON - create empty body and continue
+      req.body = {};
+      console.log('[WARN] Malformed JSON received, using empty body');
+      return next();
+    }
+    next(err);
+  });
+});
+
 // Middleware
 app.use(cors());
-app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // In-memory log storage for the UI
@@ -239,6 +258,176 @@ app.post('/api/generate', async (req, res) => {
       logs: runLogs
     });
   }
+});
+
+
+// ==================== Safe Report Generation API ====================
+
+// Normalize and validate input with defaults
+function normalizeReportInput(body) {
+  const defaults = {
+    title: 'Untitled Report',
+    style: 'finance',
+    outputs: ['html'],
+    sections: [
+      { heading: 'Summary', content: 'Report generated via UI-TARS Safe API' }
+    ],
+    workflow: null
+  };
+
+  if (!body || typeof body !== 'object') {
+    return defaults;
+  }
+
+  return {
+    title: String(body.title || defaults.title).substring(0, 200),
+    style: ['sports', 'entertainment', 'finance', 'politics', 'military'].includes(body.style)
+      ? body.style : defaults.style,
+    outputs: Array.isArray(body.outputs)
+      ? body.outputs.filter(o => ['html', 'pdf', 'ppt'].includes(o)).slice(0, 3)
+      : defaults.outputs,
+    sections: Array.isArray(body.sections) && body.sections.length > 0
+      ? body.sections.slice(0, 20).map(s => ({
+          heading: String(s.heading || 'Section').substring(0, 100),
+          content: String(s.content || '').substring(0, 10000)
+        }))
+      : defaults.sections,
+    workflow: body.workflow || null
+  };
+}
+
+// Safe generate endpoint - never crashes, always returns valid response
+// This has its own generation logic to ensure reliability
+app.post('/api/generate-safe', async (req, res) => {
+  const startTime = Date.now();
+  runLogs = [];
+  runStatus = 'running';
+
+  const addLog = (message, type = 'info') => {
+    const timestamp = new Date().toISOString();
+    runLogs.push({ timestamp, message, type });
+    console.log('[' + type.toUpperCase() + '] ' + message);
+  };
+
+  try {
+    // Validate and normalize input
+    let body = req.body;
+    if (!body || typeof body !== 'object') {
+      body = {};
+    }
+
+    const input = normalizeReportInput(body);
+    console.log('[SAFE-GENERATE] Input normalized:', input.title, input.style, input.outputs.join(','));
+
+    addLog('Starting report generation...');
+    addLog('Title: ' + input.title);
+    addLog('Style: ' + input.style);
+    addLog('Requested outputs: ' + input.outputs.join(', '));
+
+    // Default sections if none provided
+    const reportSections = input.sections.length > 0 ? input.sections : [
+      {
+        heading: 'Executive Summary',
+        content: 'This is a comprehensive report generated through the UI-TARS Safe API.'
+      },
+      {
+        heading: 'Key Findings',
+        content: 'Report generation system is fully functional with multiple visual styles and output formats.'
+      }
+    ];
+
+    const results = {};
+
+    // Generate HTML
+    if (input.outputs.includes('html')) {
+      addLog('Generating HTML report...');
+      const generator = new ReportGenerator();
+      const html = generator.generate({
+        title: input.title,
+        style: input.style,
+        sections: reportSections,
+        metadata: { author: 'UI-TARS', date: new Date().toISOString() }
+      });
+
+      const safeTitle = input.title.replace(/[^a-zA-Z0-9-_]/g, '-');
+      const safeStyle = input.style.replace(/[^a-zA-Z0-9-_]/g, '-');
+      const htmlPath = path.join(__dirname, 'reports', safeTitle + '-' + safeStyle + '.html');
+      fs.writeFileSync(htmlPath, html);
+      addLog('HTML saved to: ' + htmlPath, 'success');
+      results.html = htmlPath;
+    }
+
+    // Generate PDF
+    if (input.outputs.includes('pdf')) {
+      addLog('Converting to PDF...');
+      const pdfConverter = new PDFConverter();
+      const pdfHtml = results.html ? fs.readFileSync(results.html, 'utf-8') : new ReportGenerator().generate({ title: input.title, style: input.style, sections: reportSections });
+      const pdfDir = path.join(__dirname, 'reports/pdf');
+      if (!fs.existsSync(pdfDir)) { fs.mkdirSync(pdfDir, { recursive: true }); }
+      const safeTitle = input.title.replace(/[^a-zA-Z0-9-_]/g, '-');
+      const safeStyle = input.style.replace(/[^a-zA-Z0-9-_]/g, '-');
+      const pdfPath = path.join(pdfDir, safeTitle + '-' + safeStyle + '.pdf');
+      await pdfConverter.fromHTML(pdfHtml, pdfPath);
+      addLog('PDF saved to: ' + pdfPath, 'success');
+      results.pdf = pdfPath;
+    }
+
+    // Generate PPT
+    if (input.outputs.includes('ppt')) {
+      addLog('Converting to PowerPoint...');
+      const pptConverter = PPTConverter.create({ theme: input.style, title: input.title });
+      const pptData = { slides: reportSections.map(s => ({ type: 'content', title: s.heading, content: typeof s.content === 'string' ? s.content.split('\n').filter(Boolean) : [s.content] })) };
+      const pptDir = path.join(__dirname, 'reports/ppt');
+      if (!fs.existsSync(pptDir)) { fs.mkdirSync(pptDir, { recursive: true }); }
+      const safeTitle = input.title.replace(/[^a-zA-Z0-9-_]/g, '-');
+      const safeStyle = input.style.replace(/[^a-zA-Z0-9-_]/g, '-');
+      const pptPath = path.join(pptDir, safeTitle + '-' + safeStyle + '.pptx');
+      await pptConverter.fromData(pptData, pptPath);
+      pptConverter.close();
+      addLog('PPT saved to: ' + pptPath, 'success');
+      results.ppt = pptPath;
+    }
+
+    addLog('Report generation completed!', 'success');
+    runStatus = 'completed';
+
+    res.json({
+      success: true,
+      results,
+      logs: runLogs,
+      processingTime: Date.now() - startTime,
+      inputNormalized: true
+    });
+
+  } catch (error) {
+    addLog('Error: ' + error.message, 'error');
+    runStatus = 'error';
+    res.status(200).json({
+      success: false,
+      error: error.message,
+      suggestion: 'Check input parameters and try again',
+      logs: runLogs,
+      processingTime: Date.now() - startTime
+    });
+  }
+});
+
+// Error normalization middleware for all /api routes
+app.use('/api/', (req, res, next) => {
+  const originalSend = res.send;
+  res.send = function(data) {
+    if (res.statusCode >= 400 && data) {
+      try {
+        const parsed = typeof data === 'string' ? JSON.parse(data) : data;
+        if (parsed.error && !parsed.suggestion) {
+          parsed.suggestion = 'Check API documentation for correct parameter formats';
+        }
+        return originalSend.call(this, JSON.stringify(parsed));
+      } catch {}
+    }
+    return originalSend.call(this, data);
+  };
+  next();
 });
 
 // ==================== Email Module API (P3-F2) ====================

@@ -5,203 +5,283 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UI-TARS Unified Dashboard</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-tertiary: #f1f5f9;
+      --text-primary: #0f172a;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --border-color: #e2e8f0;
+      --accent-primary: #3b82f6;
+      --accent-hover: #2563eb;
+      --accent-success: #10b981;
+      --accent-warning: #f59e0b;
+      --accent-danger: #ef4444;
+      --sidebar-width: 240px;
+      --header-height: 56px;
     }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      background: var(--bg-primary);
+      color: var(--text-primary);
       min-height: 100vh;
-      color: #f3f4f6;
-    }
-
-    /* Header */
-    .header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      padding: 20px 40px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     }
 
-    .header h1 {
-      font-size: 1.8em;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }
-
-    .header-controls {
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border-color);
       display: flex;
-      gap: 15px;
-      align-items: center;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 100;
     }
 
-    .header-btn {
-      padding: 10px 20px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .header-btn.primary {
-      background: rgba(255,255,255,0.2);
-      color: white;
-    }
-
-    .header-btn.primary:hover {
-      background: rgba(255,255,255,0.3);
-    }
-
-    /* Tab Navigation */
-    .tabs {
+    .sidebar-header {
+      height: var(--header-height);
       display: flex;
-      background: rgba(0,0,0,0.2);
+      align-items: center;
       padding: 0 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid var(--border-color);
     }
 
-    .tab {
-      padding: 15px 25px;
-      cursor: pointer;
-      color: #9ca3af;
-      font-weight: 500;
-      border-bottom: 3px solid transparent;
-      transition: all 0.3s ease;
+    .sidebar-logo {
+      font-size: 1.1em;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
+    }
+
+    .sidebar-logo span { color: var(--accent-primary); }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 12px 0;
+      overflow-y: auto;
+    }
+
+    .nav-item {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
+      padding: 10px 20px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9em;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      border-left: 3px solid transparent;
     }
 
-    .tab:hover {
-      color: #fff;
-      background: rgba(255,255,255,0.05);
+    .nav-item:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
     }
 
-    .tab.active {
-      color: #fff;
-      border-bottom-color: #667eea;
-      background: rgba(255,255,255,0.05);
+    .nav-item.active {
+      background: #eff6ff;
+      color: var(--accent-primary);
+      border-left-color: var(--accent-primary);
     }
 
-    .tab .icon {
+    .nav-icon {
+      width: 20px;
+      text-align: center;
       font-size: 1.1em;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      background: var(--accent-primary);
+      color: white;
+      font-size: 0.7em;
+      padding: 2px 6px;
+      border-radius: 10px;
     }
 
     /* Main Content */
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 30px;
+    .main {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      min-height: 100vh;
+    }
+
+    .main-header {
+      height: var(--header-height);
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-title {
+      font-size: 1em;
+      font-weight: 600;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .main-content {
+      padding: 24px;
     }
 
     /* Status Cards */
-    .status-cards {
+    .status-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      margin-bottom: 30px;
+      gap: 16px;
+      margin-bottom: 24px;
     }
 
     @media (max-width: 1024px) {
-      .status-cards {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .status-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     .status-card {
-      background: rgba(255,255,255,0.05);
-      border-radius: 12px;
-      padding: 20px;
-      border: 1px solid rgba(255,255,255,0.1);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
+      transition: box-shadow 0.2s ease;
     }
 
-    .status-card .icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 12px;
+    .status-card:hover {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .status-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5em;
+      font-size: 1.2em;
     }
 
-    .status-card.agent .icon { background: linear-gradient(135deg, #10b981, #059669); }
-    .status-card.reports .icon { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
-    .status-card.email .icon { background: linear-gradient(135deg, #f59e0b, #d97706); }
-    .status-card.browser .icon { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+    .status-icon.agent { background: #dcfce7; }
+    .status-icon.reports { background: #dbeafe; }
+    .status-icon.email { background: #fef3c7; }
+    .status-icon.browser { background: #ede9fe; }
 
-    .status-card .info h3 {
-      font-size: 0.9em;
-      color: #9ca3af;
-      margin-bottom: 5px;
+    .status-info h4 {
+      font-size: 0.75em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
     }
 
-    .status-card .info .status {
-      font-size: 1.1em;
+    .status-info p {
+      font-size: 0.95em;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .status-info p.online { color: var(--accent-success); }
+    .status-info p.ready { color: var(--accent-primary); }
+    .status-info p.offline { color: var(--text-muted); }
+
+    /* Panels */
+    .panel {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .panel-title {
+      font-size: 1em;
       font-weight: 600;
     }
 
-    .status-card .info .status.online { color: #10b981; }
-    .status-card .info .status.offline { color: #6b7280; }
-    .status-card .info .status.ready { color: #3b82f6; }
-
-    /* Tab Content */
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    /* Panel Styles */
-    .panel {
-      background: rgba(255,255,255,0.05);
-      border-radius: 16px;
-      padding: 30px;
-      border: 1px solid rgba(255,255,255,0.1);
-      margin-bottom: 20px;
-    }
-
-    .panel h2 {
-      font-size: 1.3em;
-      margin-bottom: 20px;
-      display: flex;
+    /* Buttons */
+    .btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: none;
+      font-size: 0.85em;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 6px;
+      text-decoration: none;
     }
 
-    .panel h2::before {
-      content: '';
-      width: 4px;
-      height: 20px;
-      background: linear-gradient(180deg, #667eea, #764ba2);
-      border-radius: 2px;
+    .btn-primary {
+      background: var(--accent-primary);
+      color: white;
     }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-secondary {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    .btn-secondary:hover {
+      background: var(--border-color);
+    }
+
+    .btn-success {
+      background: var(--accent-success);
+      color: white;
+    }
+
+    .btn-danger {
+      background: var(--accent-danger);
+      color: white;
+    }
+
+    .btn-sm { padding: 6px 12px; font-size: 0.8em; }
+    .btn-lg { padding: 12px 24px; font-size: 1em; }
 
     /* Forms */
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
-    .form-group label {
+    .form-label {
       display: block;
-      margin-bottom: 8px;
+      font-size: 0.8em;
       font-weight: 600;
-      color: #9ca3af;
-      font-size: 0.85em;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
@@ -209,242 +289,135 @@
     input[type="text"],
     input[type="email"],
     input[type="password"],
-    input[type="number"],
-    textarea {
+    input[type="url"],
+    textarea,
+    select {
       width: 100%;
-      padding: 12px 16px;
-      border: 2px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
-      background: rgba(255,255,255,0.05);
-      color: #fff;
-      font-size: 1em;
-      transition: all 0.3s ease;
+      padding: 10px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.9em;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      transition: border-color 0.15s ease;
     }
 
-    input:focus, textarea:focus {
+    input:focus, textarea:focus, select:focus {
       outline: none;
-      border-color: #667eea;
-      background: rgba(255,255,255,0.1);
-    }
-
-    textarea {
-      min-height: 100px;
-      resize: vertical;
+      border-color: var(--accent-primary);
     }
 
     /* Style Selector */
-    .style-selector {
+    .style-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 10px;
     }
 
-    .style-option {
-      position: relative;
-    }
-
-    .style-option input {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
-
+    .style-option input { display: none; }
     .style-option label {
       display: block;
-      padding: 14px 8px;
+      padding: 12px;
       text-align: center;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
-      transition: all 0.3s ease;
-      text-transform: none;
       font-size: 0.8em;
+      font-weight: 600;
       border: 2px solid transparent;
+      transition: all 0.15s ease;
     }
 
     .style-option input:checked + label {
-      transform: scale(1.05);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      border-color: currentColor;
+      transform: scale(1.02);
     }
 
-    .style-sports label { background: linear-gradient(135deg, #FF6B35, #F7C548); color: #1a1a2e; }
-    .style-sports input:checked + label { border-color: #FF6B35; }
-
-    .style-entertainment label { background: linear-gradient(135deg, #FF1493, #9400D3); color: #fff; }
-    .style-entertainment input:checked + label { border-color: #FF1493; }
-
-    .style-finance label { background: linear-gradient(135deg, #0D47A1, #1565C0); color: #fff; }
-    .style-finance input:checked + label { border-color: #0D47A1; }
-
-    .style-politics label { background: linear-gradient(135deg, #8B0000, #1A1A2E); color: #fff; }
-    .style-politics input:checked + label { border-color: #8B0000; }
-
-    .style-military label { background: linear-gradient(135deg, #2E5A1C, #C4B538); color: #fff; }
-    .style-military input:checked + label { border-color: #C4B538; }
+    .style-sports label { background: #fff7ed; color: #c2410c; }
+    .style-entertainment label { background: #fdf2f8; color: #db2777; }
+    .style-finance label { background: #eff6ff; color: #1d4ed8; }
+    .style-politics label { background: #fef2f2; color: #b91c1c; }
+    .style-military label { background: #f6fde4; color: #3f6212; }
 
     /* Format Toggles */
     .format-toggles {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
-    .format-toggle {
-      position: relative;
-    }
-
-    .format-toggle input {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
-
+    .format-toggle input { display: none; }
     .format-toggle label {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 10px 20px;
-      border-radius: 8px;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 6px;
       cursor: pointer;
-      transition: all 0.3s ease;
-      background: rgba(255,255,255,0.05);
-      border: 2px solid rgba(255,255,255,0.1);
-      text-transform: none;
-    }
-
-    .format-toggle label:hover {
-      background: rgba(255,255,255,0.1);
+      font-size: 0.85em;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      transition: all 0.15s ease;
     }
 
     .format-toggle input:checked + label {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      border-color: #667eea;
-    }
-
-    select {
-      width: 100%;
-      padding: 12px 16px;
-      border: 2px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
-      background: rgba(255,255,255,0.05);
-      color: #fff;
-      font-size: 1em;
-      cursor: pointer;
-    }
-
-    select option {
-      background: #1a1a2e;
-    }
-
-    /* Buttons */
-    .btn {
-      padding: 12px 24px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: var(--accent-primary);
       color: white;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.2);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255,255,255,0.2);
-    }
-
-    .btn-danger {
-      background: rgba(239,68,68,0.2);
-      color: #ef4444;
-      border: 1px solid rgba(239,68,68,0.3);
-    }
-
-    .btn-danger:hover {
-      background: rgba(239,68,68,0.3);
-    }
-
-    .btn-success {
-      background: rgba(16,185,129,0.2);
-      color: #10b981;
-      border: 1px solid rgba(16,185,129,0.3);
-    }
-
-    .btn-success:hover {
-      background: rgba(16,185,129,0.3);
+      border-color: var(--accent-primary);
     }
 
     /* Logs */
-    .logs-panel {
-      max-height: 400px;
+    .logs-container {
+      max-height: 300px;
       overflow-y: auto;
-    }
-
-    .logs-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
+      background: #1e293b;
+      border-radius: 6px;
+      padding: 12px;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 0.8em;
     }
 
     .log-entry {
-      padding: 12px 16px;
-      margin-bottom: 8px;
-      border-radius: 6px;
-      background: rgba(255,255,255,0.03);
-      border-left: 4px solid;
+      padding: 6px 0;
+      border-bottom: 1px solid #334155;
+      color: #e2e8f0;
     }
 
-    .log-entry.info { border-color: #3b82f6; }
-    .log-entry.success { border-color: #10b981; }
-    .log-entry.warning { border-color: #f59e0b; }
-    .log-entry.error { border-color: #ef4444; }
+    .log-entry:last-child { border-bottom: none; }
+    .log-entry.info { color: #60a5fa; }
+    .log-entry.success { color: #4ade80; }
+    .log-entry.warning { color: #fbbf24; }
+    .log-entry.error { color: #f87171; }
 
-    .log-entry .time {
-      font-size: 0.75em;
-      color: #6b7280;
-      margin-bottom: 4px;
+    .log-time {
+      color: #64748b;
+      margin-right: 8px;
     }
 
-    /* Status Indicator */
-    .status-indicator {
+    /* Status Badge */
+    .status-badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
+      gap: 6px;
+      padding: 4px 10px;
       border-radius: 20px;
-      font-size: 0.8em;
-      margin-bottom: 15px;
+      font-size: 0.75em;
+      font-weight: 500;
     }
 
-    .status-indicator.idle { background: rgba(107,114,128,0.2); color: #9ca3af; }
-    .status-indicator.running { background: rgba(139,92,246,0.2); color: #a78bfa; }
-    .status-indicator.completed { background: rgba(16,185,129,0.2); color: #10b981; }
-    .status-indicator.error { background: rgba(239,68,68,0.2); color: #ef4444; }
+    .status-badge.idle { background: #f1f5f9; color: #64748b; }
+    .status-badge.running { background: #fef3c7; color: #d97706; }
+    .status-badge.completed { background: #dcfce7; color: #059669; }
+    .status-badge.error { background: #fee2e2; color: #dc2626; }
 
     .status-dot {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: currentColor;
     }
 
-    .status-indicator.running .status-dot {
-      animation: pulse 1.5s infinite;
+    .status-badge.running .status-dot {
+      animation: pulse 1s infinite;
     }
 
     @keyframes pulse {
@@ -453,24 +426,22 @@
     }
 
     /* Results */
-    .results-section {
-      margin-top: 20px;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255,255,255,0.1);
+    .results-list {
+      margin-top: 16px;
     }
 
     .result-item {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 10px;
-      background: rgba(16,185,129,0.1);
+      padding: 10px 14px;
+      background: var(--bg-tertiary);
       border-radius: 6px;
       margin-bottom: 8px;
     }
 
     .result-item a {
-      color: #10b981;
+      color: var(--accent-primary);
       text-decoration: none;
     }
 
@@ -485,711 +456,613 @@
     }
 
     .email-item {
-      padding: 15px;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.03);
-      margin-bottom: 10px;
+      padding: 12px 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      margin-bottom: 8px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.15s ease;
     }
 
     .email-item:hover {
-      background: rgba(255,255,255,0.08);
+      background: var(--bg-tertiary);
+      border-color: var(--accent-primary);
     }
 
     .email-item.unread {
-      border-left: 3px solid #667eea;
+      border-left: 3px solid var(--accent-primary);
     }
 
-    .email-item .subject {
+    .email-from {
       font-weight: 600;
-      margin-bottom: 5px;
-    }
-
-    .email-item .meta {
-      font-size: 0.85em;
-      color: #6b7280;
-    }
-
-    /* Browser Controls */
-    .browser-controls {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-    }
-
-    .browser-btn {
-      padding: 20px;
-      text-align: center;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .browser-btn:hover {
-      background: rgba(255,255,255,0.1);
-      border-color: #667eea;
-    }
-
-    .browser-btn .icon {
-      font-size: 1.5em;
-      margin-bottom: 8px;
-    }
-
-    .browser-btn .label {
       font-size: 0.9em;
-      color: #9ca3af;
     }
 
-    /* Iframe container */
-    .iframe-container {
-      width: 100%;
-      height: calc(100vh - 200px);
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: #0a0a1a;
+    .email-subject {
+      color: var(--text-secondary);
+      font-size: 0.85em;
+      margin-top: 2px;
     }
 
-    .iframe-container iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
+    .email-date {
+      color: var(--text-muted);
+      font-size: 0.75em;
+      margin-left: auto;
     }
 
-    /* Grid layouts */
+    /* Tab Content */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Grid Layout */
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 768px) {
       .grid-2 { grid-template-columns: 1fr; }
     }
 
-    /* Empty state */
-    .empty-state {
-      text-align: center;
-      padding: 40px;
-      color: #6b7280;
-    }
-
-    .empty-state .icon {
-      font-size: 2.5em;
-      margin-bottom: 15px;
-      opacity: 0.5;
-    }
-
-    /* URL bar */
-    .url-bar {
-      display: flex;
-      gap: 10px;
+    /* CTA Sections */
+    .cta-section {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border-radius: 8px;
+      padding: 24px;
+      color: white;
       margin-bottom: 20px;
     }
 
-    .url-bar input {
-      flex: 1;
+    .cta-section h3 {
+      font-size: 1.1em;
+      margin-bottom: 8px;
     }
 
-    /* Inline form */
-    .inline-form {
+    .cta-section p {
+      font-size: 0.9em;
+      opacity: 0.9;
+      margin-bottom: 16px;
+    }
+
+    /* Browser Controls */
+    .browser-controls {
       display: flex;
-      gap: 10px;
-      align-items: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
-    .inline-form .form-group {
-      margin-bottom: 0;
-      flex: 1;
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-muted);
     }
+
+    .empty-state .icon {
+      font-size: 2em;
+      margin-bottom: 8px;
+    }
+
+    /* Hidden */
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <div class="header">
-    <h1>UI-TARS Unified Dashboard</h1>
-    <div class="header-controls">
-      <a href="http://localhost:7777" target="_blank" class="header-btn primary">
-        <span>🚀</span> Open Agent Console
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">UI-<span>TARS</span></div>
+    </div>
+    <div class="sidebar-nav">
+      <a class="nav-item active" data-tab="dashboard">
+        <span class="nav-icon">📊</span>
+        Dashboard
+      </a>
+      <a class="nav-item" data-tab="reports">
+        <span class="nav-icon">📝</span>
+        Reports
+        <span class="nav-badge">New</span>
+      </a>
+      <a class="nav-item" data-tab="email">
+        <span class="nav-icon">📧</span>
+        Email
+      </a>
+      <a class="nav-item" data-tab="browser">
+        <span class="nav-icon">🌐</span>
+        Browser
+      </a>
+      <a class="nav-item" data-tab="agent">
+        <span class="nav-icon">🤖</span>
+        Agent
       </a>
     </div>
-  </div>
-
-  <!-- Tab Navigation -->
-  <div class="tabs">
-    <div class="tab active" data-tab="dashboard">
-      <span class="icon">📊</span> Dashboard
-    </div>
-    <div class="tab" data-tab="reports">
-      <span class="icon">📋</span> Report Center
-    </div>
-    <div class="tab" data-tab="email">
-      <span class="icon">📧</span> Email Module
-    </div>
-    <div class="tab" data-tab="browser">
-      <span class="icon">🌐</span> Browser Control
-    </div>
-    <div class="tab" data-tab="agent">
-      <span class="icon">🤖</span> Agent Console
-    </div>
-  </div>
+  </nav>
 
   <!-- Main Content -->
-  <div class="container">
-    <!-- Dashboard Tab -->
-    <div class="tab-content active" id="tab-dashboard">
-      <!-- Status Cards -->
-      <div class="status-cards">
-        <div class="status-card agent">
-          <div class="icon">🤖</div>
-          <div class="info">
-            <h3>Agent Console</h3>
-            <div class="status online" id="status-agent">Available</div>
-          </div>
-        </div>
-        <div class="status-card reports">
-          <div class="icon">📊</div>
-          <div class="info">
-            <h3>Report Center</h3>
-            <div class="status ready" id="status-reports">Ready</div>
-          </div>
-        </div>
-        <div class="status-card email">
-          <div class="icon">📧</div>
-          <div class="info">
-            <h3>Email Module</h3>
-            <div class="status offline" id="status-email">Not Configured</div>
-          </div>
-        </div>
-        <div class="status-card browser">
-          <div class="icon">🌐</div>
-          <div class="info">
-            <h3>Browser Control</h3>
-            <div class="status offline" id="status-browser">Disconnected</div>
-          </div>
-        </div>
+  <main class="main">
+    <header class="main-header">
+      <h1 class="header-title" id="page-title">Dashboard</h1>
+      <div class="header-actions">
+        <button class="btn btn-secondary btn-sm" onclick="refreshStatus()">
+          ↻ Refresh
+        </button>
+        <a href="http://localhost:7777" target="_blank" class="btn btn-primary btn-sm">
+          Open Agent Console
+        </a>
       </div>
+    </header>
 
-      <!-- Quick Actions -->
-      <div class="panel">
-        <h2>Quick Actions</h2>
-        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-          <button class="btn btn-primary" onclick="switchTab('reports')">
-            <span>📋</span> Generate Report
-          </button>
-          <button class="btn btn-secondary" onclick="switchTab('email')">
-            <span>📧</span> Check Email
-          </button>
-          <button class="btn btn-secondary" onclick="switchTab('browser')">
-            <span>🌐</span> Open Browser
-          </button>
-          <button class="btn btn-secondary" onclick="switchTab('agent')">
-            <span>🤖</span> Open Agent
-          </button>
-        </div>
-      </div>
-
-      <!-- Recent Activity -->
-      <div class="panel">
-        <h2>Recent Activity</h2>
-        <div id="dashboard-logs">
-          <div class="empty-state">
-            <div class="icon">📋</div>
-            <div>No recent activity</div>
+    <div class="main-content">
+      <!-- Dashboard Tab -->
+      <div class="tab-content active" id="tab-dashboard">
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-icon agent">🤖</div>
+            <div class="status-info">
+              <h4>Agent Console</h4>
+              <p class="online" id="status-agent">Available</p>
+            </div>
+          </div>
+          <div class="status-card">
+            <div class="status-icon reports">📊</div>
+            <div class="status-info">
+              <h4>Report Center</h4>
+              <p class="ready" id="status-reports">Ready</p>
+            </div>
+          </div>
+          <div class="status-card">
+            <div class="status-icon email">📧</div>
+            <div class="status-info">
+              <h4>Email Module</h4>
+              <p class="offline" id="status-email">Not Configured</p>
+            </div>
+          </div>
+          <div class="status-card">
+            <div class="status-icon browser">🌐</div>
+            <div class="status-info">
+              <h4>Browser</h4>
+              <p class="offline" id="status-browser">Disconnected</p>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Report Center Tab -->
-    <div class="tab-content" id="tab-reports">
-      <div class="grid-2">
-        <!-- Configuration Panel -->
+        <!-- Quick Actions CTA -->
+        <div class="cta-section">
+          <h3>🚀 Quick Actions</h3>
+          <p>Generate reports, send emails, or control browser - all in one place.</p>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <button class="btn btn-secondary" onclick="switchTab('reports'); document.querySelector('[data-tab=\'reports\']').click();">
+              Generate Report
+            </button>
+            <button class="btn btn-secondary" onclick="switchTab('email'); document.querySelector('[data-tab=\'email\']').click();">
+              Send Email
+            </button>
+            <button class="btn btn-secondary" onclick="switchTab('browser'); document.querySelector('[data-tab=\'browser\']').click();">
+              Control Browser
+            </button>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
         <div class="panel">
-          <h2>Report Configuration</h2>
-
-          <div class="form-group">
-            <label>Report Title</label>
-            <input type="text" id="reportTitle" placeholder="Enter report title..." value="My Report">
+          <div class="panel-header">
+            <h3 class="panel-title">Recent Activity</h3>
+            <span class="status-badge idle" id="run-status">
+              <span class="status-dot"></span>
+              Idle
+            </span>
           </div>
-
-          <div class="form-group">
-            <label>Report Style</label>
-            <div class="style-selector">
-              <div class="style-option style-sports">
-                <input type="radio" name="style" id="style-sports" value="sports">
-                <label for="style-sports">Sports</label>
-              </div>
-              <div class="style-option style-entertainment">
-                <input type="radio" name="style" id="style-entertainment" value="entertainment">
-                <label for="style-entertainment">Entertainment</label>
-              </div>
-              <div class="style-option style-finance">
-                <input type="radio" name="style" id="style-finance" value="finance" checked>
-                <label for="style-finance">Finance</label>
-              </div>
-              <div class="style-option style-politics">
-                <input type="radio" name="style" id="style-politics" value="politics">
-                <label for="style-politics">Politics</label>
-              </div>
-              <div class="style-option style-military">
-                <input type="radio" name="style" id="style-military" value="military">
-                <label for="style-military">Military</label>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>Output Formats</label>
-            <div class="format-toggles">
-              <div class="format-toggle">
-                <input type="checkbox" id="format-html" value="html" checked>
-                <label for="format-html"><span>📄</span> HTML</label>
-              </div>
-              <div class="format-toggle">
-                <input type="checkbox" id="format-pdf" value="pdf">
-                <label for="format-pdf"><span>📕</span> PDF</label>
-              </div>
-              <div class="format-toggle">
-                <input type="checkbox" id="format-ppt" value="ppt">
-                <label for="format-ppt"><span>📊</span> PPT</label>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>Workflow Template</label>
-            <select id="workflowTemplate">
-              <option value="">Select a workflow template...</option>
-            </select>
-          </div>
-
-          <button class="btn btn-primary" id="runBtn" onclick="runReport()">
-            <span>▶</span> Generate Report
-          </button>
-
-          <div class="results-section" id="resultsSection" style="display: none;">
-            <h3 style="margin-bottom: 10px; color: #10b981;">Generated Files:</h3>
-            <div id="resultsList"></div>
-          </div>
-        </div>
-
-        <!-- Logs Panel -->
-        <div class="panel logs-panel">
-          <h2>Generation Logs</h2>
-
-          <div class="status-indicator idle" id="statusIndicator">
-            <span class="status-dot"></span>
-            <span id="statusText">Ready</span>
-          </div>
-
-          <div class="logs-header">
-            <span style="color: #9ca3af; font-size: 0.9em;">Activity Log</span>
-            <button class="btn btn-danger" onclick="clearLogs()" style="padding: 6px 12px; font-size: 0.8em;">Clear</button>
-          </div>
-
-          <div id="logsContainer">
+          <div class="logs-container" id="dashboard-logs">
             <div class="empty-state">
               <div class="icon">📋</div>
-              <div>No logs yet. Run a report to see activity.</div>
+              <div>No recent activity</div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Email Module Tab -->
-    <div class="tab-content" id="tab-email">
-      <div class="grid-2">
-        <!-- Email Configuration -->
-        <div class="panel">
-          <h2>Account Configuration</h2>
-
-          <div class="form-group">
-            <label>IMAP/SMTP Host</label>
-            <input type="text" id="emailHost" placeholder="imap.example.com">
-          </div>
-
-          <div class="form-group">
-            <label>Port</label>
-            <input type="number" id="emailPort" value="993">
-          </div>
-
-          <div class="form-group">
-            <label>Email Address</label>
-            <input type="email" id="emailUser" placeholder="your@email.com">
-          </div>
-
-          <div class="form-group">
-            <label>Password / App Password</label>
-            <input type="password" id="emailPassword" placeholder="••••••••">
-          </div>
-
-          <div class="form-group">
-            <label>
-              <input type="checkbox" id="emailSecured"> Use SSL/TLS
-            </label>
-          </div>
-
-          <button class="btn btn-primary" onclick="saveEmailConfig()">
-            <span>💾</span> Save Configuration
-          </button>
-        </div>
-
-        <!-- Email Actions -->
-        <div class="panel">
-          <h2>Email Actions</h2>
-
-          <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-            <button class="btn btn-secondary" onclick="loadInbox()">
-              <span>📥</span> Refresh Inbox
+      <!-- Reports Tab -->
+      <div class="tab-content" id="tab-reports">
+        <div class="grid-2">
+          <!-- Report Form -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title">Generate Report</h3>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Report Title</label>
+              <input type="text" id="report-title" placeholder="Enter report title" value="My Report">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Visual Style</label>
+              <div class="style-grid">
+                <div class="style-option style-sports">
+                  <input type="radio" name="style" id="style-sports" value="sports">
+                  <label for="style-sports">🏃 Sports</label>
+                </div>
+                <div class="style-option style-entertainment">
+                  <input type="radio" name="style" id="style-entertainment" value="entertainment">
+                  <label for="style-entertainment">🎬 Entertainment</label>
+                </div>
+                <div class="style-option style-finance">
+                  <input type="radio" name="style" id="style-finance" value="finance" checked>
+                  <label for="style-finance">💰 Finance</label>
+                </div>
+                <div class="style-option style-politics">
+                  <input type="radio" name="style" id="style-politics" value="politics">
+                  <label for="style-politics">🏛️ Politics</label>
+                </div>
+                <div class="style-option style-military">
+                  <input type="radio" name="style" id="style-military" value="military">
+                  <label for="style-military">⚔️ Military</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Output Formats</label>
+              <div class="format-toggles">
+                <div class="format-toggle">
+                  <input type="checkbox" id="format-html" value="html" checked>
+                  <label for="format-html">📄 HTML</label>
+                </div>
+                <div class="format-toggle">
+                  <input type="checkbox" id="format-pdf" value="pdf">
+                  <label for="format-pdf">📕 PDF</label>
+                </div>
+                <div class="format-toggle">
+                  <input type="checkbox" id="format-ppt" value="ppt">
+                  <label for="format-ppt">📊 PPT</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Workflow (Optional)</label>
+              <select id="report-workflow">
+                <option value="">None - Quick Generate</option>
+              </select>
+            </div>
+            <button class="btn btn-primary btn-lg" onclick="generateReport()" style="width: 100%;">
+              ⚡ Generate Report
             </button>
           </div>
 
-          <h3 style="margin-bottom: 15px; color: #9ca3af;">Inbox</h3>
-          <div class="email-list" id="emailList">
-            <div class="empty-state">
-              <div class="icon">📭</div>
-              <div>No messages. Configure and refresh.</div>
+          <!-- Results & Logs -->
+          <div>
+            <div class="panel">
+              <div class="panel-header">
+                <h3 class="panel-title">Generation Status</h3>
+              </div>
+              <div id="report-status">
+                <div class="empty-state">
+                  <div class="icon">📝</div>
+                  <div>Click Generate to create a report</div>
+                </div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-header">
+                <h3 class="panel-title">Report Logs</h3>
+                <button class="btn btn-secondary btn-sm" onclick="clearLogs()">Clear</button>
+              </div>
+              <div class="logs-container" id="report-logs"></div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Compose Email -->
-      <div class="panel">
-        <h2>Compose Email</h2>
-
-        <div class="inline-form">
-          <div class="form-group">
-            <label>To</label>
-            <input type="email" id="emailTo" placeholder="recipient@example.com">
+      <!-- Email Tab -->
+      <div class="tab-content" id="tab-email">
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title">Email Configuration</h3>
+            </div>
+            <div class="form-group">
+              <label class="form-label">IMAP Host</label>
+              <input type="text" id="email-host" placeholder="imap.example.com">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Port</label>
+              <input type="number" id="email-port" value="993">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input type="email" id="email-user" placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Password</label>
+              <input type="password" id="email-password" placeholder="••••••••">
+            </div>
+            <button class="btn btn-primary" onclick="saveEmailConfig()" style="width: 100%;">
+              Save Configuration
+            </button>
           </div>
-          <div class="form-group">
-            <label>Subject</label>
-            <input type="text" id="emailSubject" placeholder="Email subject">
+
+          <div>
+            <div class="panel">
+              <div class="panel-header">
+                <h3 class="panel-title">Compose Email</h3>
+              </div>
+              <div class="form-group">
+                <label class="form-label">To</label>
+                <input type="email" id="email-to" placeholder="recipient@example.com">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Subject</label>
+                <input type="text" id="email-subject" placeholder="Email subject">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Message</label>
+                <textarea id="email-body" rows="5" placeholder="Write your message..."></textarea>
+              </div>
+              <button class="btn btn-success" onclick="sendEmail()" style="width: 100%;">
+                ✉️ Send Email
+              </button>
+            </div>
+            <div class="panel">
+              <div class="panel-header">
+                <h3 class="panel-title">Inbox</h3>
+              </div>
+              <div class="email-list" id="email-inbox">
+                <div class="empty-state">
+                  <div class="icon">📭</div>
+                  <div>No messages</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
 
-        <div class="form-group">
-          <label>Message</label>
-          <textarea id="emailBody" placeholder="Write your message..."></textarea>
+      <!-- Browser Tab -->
+      <div class="tab-content" id="tab-browser">
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title">Browser Control</h3>
+            </div>
+            <div class="form-group">
+              <label class="form-label">URL</label>
+              <input type="url" id="browser-url" placeholder="https://example.com">
+            </div>
+            <div class="browser-controls">
+              <button class="btn btn-primary" onclick="openUrl()">Open URL</button>
+              <button class="btn btn-secondary" onclick="takeScreenshot()">📷 Screenshot</button>
+              <button class="btn btn-secondary" onclick="scrollPage('up')">↑ Scroll Up</button>
+              <button class="btn btn-secondary" onclick="scrollPage('down')">↓ Scroll Down</button>
+            </div>
+            <div class="form-group" style="margin-top: 16px;">
+              <label class="form-label">Click Element</label>
+              <div style="display: flex; gap: 8px;">
+                <input type="text" id="click-selector" placeholder="CSS Selector">
+                <button class="btn btn-secondary" onclick="clickElement()">Click</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Fill Form Field</label>
+              <div style="display: flex; gap: 8px;">
+                <input type="text" id="fill-selector" placeholder="CSS Selector" style="flex: 1;">
+                <input type="text" id="fill-value" placeholder="Value" style="flex: 1;">
+                <button class="btn btn-secondary" onclick="fillField()">Fill</button>
+              </div>
+            </div>
+            <button class="btn btn-danger" onclick="closeBrowser()" style="margin-top: 8px;">
+              Close Browser
+            </button>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="panel-title">Browser Status</h3>
+              <span class="status-badge idle" id="browser-status-badge">
+                <span class="status-dot"></span>
+                Disconnected
+              </span>
+            </div>
+            <div id="browser-info">
+              <div class="empty-state">
+                <div class="icon">🌐</div>
+                <div>Browser not connected</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent Tab -->
+      <div class="tab-content" id="tab-agent">
+        <div class="panel">
+          <div class="panel-header">
+            <h3 class="panel-title">Agent Console</h3>
+            <a href="http://localhost:7777" target="_blank" class="btn btn-primary">
+              Open Agent Console ↗
+            </a>
+          </div>
+          <p style="color: var(--text-secondary); margin-bottom: 16px;">
+            The Agent Console provides access to the full AI agent capabilities including:
+          </p>
+          <ul style="color: var(--text-secondary); margin-left: 20px; line-height: 1.8;">
+            <li>Web research and information gathering</li>
+            <li>Content generation and analysis</li>
+            <li>Workflow automation</li>
+            <li>Data extraction and processing</li>
+          </ul>
         </div>
 
-        <button class="btn btn-success" onclick="sendEmail()">
-          <span>📤</span> Send Email
-        </button>
+        <div class="panel">
+          <div class="panel-header">
+            <h3 class="panel-title">Agent Logs</h3>
+          </div>
+          <div class="logs-container" id="agent-logs">
+            <div class="log-entry info">
+              <span class="log-time">--:--:--</span>
+              Agent console accessible at http://localhost:7777
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
-    <!-- Browser Control Tab -->
-    <div class="tab-content" id="tab-browser">
-      <!-- URL Bar -->
-      <div class="panel">
-        <h2>Browser Control Panel</h2>
-
-        <div class="url-bar">
-          <input type="text" id="browserUrl" placeholder="Enter URL to open (e.g., https://example.com)">
-          <button class="btn btn-primary" onclick="openUrl()">
-            <span>🚀</span> Open URL
-          </button>
-        </div>
-
-        <div class="browser-controls">
-          <div class="browser-btn" onclick="browserClick()">
-            <div class="icon">👆</div>
-            <div class="label">Click</div>
-          </div>
-          <div class="browser-btn" onclick="browserFill()">
-            <div class="icon">✏️</div>
-            <div class="label">Fill Form</div>
-          </div>
-          <div class="browser-btn" onclick="browserScroll()">
-            <div class="icon">📜</div>
-            <div class="label">Scroll</div>
-          </div>
-          <div class="browser-btn" onclick="browserScreenshot()">
-            <div class="icon">📸</div>
-            <div class="label">Screenshot</div>
-          </div>
-          <div class="browser-btn" onclick="browserGoBack()">
-            <div class="icon">⬅️</div>
-            <div class="label">Go Back</div>
-          </div>
-          <div class="browser-btn" onclick="browserClose()">
-            <div class="icon">✖️</div>
-            <div class="label">Close</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Browser State -->
-      <div class="panel">
-        <h2>Browser Status</h2>
-        <div id="browserState">
-          <div class="status-indicator idle" id="browserStatusIndicator">
-            <span class="status-dot"></span>
-            <span>Disconnected</span>
-          </div>
-          <p style="color: #9ca3af;">Current URL: <span id="currentUrl">None</span></p>
-          <p style="color: #9ca3af;">Last Screenshot: <span id="lastScreenshot">None</span></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Agent Console Tab -->
-    <div class="tab-content" id="tab-agent">
-      <div class="panel">
-        <h2>Agent Console</h2>
-        <p style="color: #9ca3af; margin-bottom: 20px;">
-          The Agent Console provides advanced AI-powered capabilities. Click below to open it in a new window.
-        </p>
-        <a href="http://localhost:7777" target="_blank" class="btn btn-primary" style="text-decoration: none;">
-          <span>🚀</span> Open Agent Console (Port 7777)
-        </a>
-      </div>
-
-      <div class="iframe-container" id="agentIframeContainer" style="display: none;">
-        <iframe id="agentFrame" src="http://localhost:7777"></iframe>
-      </div>
-    </div>
-  </div>
+  </main>
 
   <script>
-    // Global state
-    let isRunning = false;
-    let logs = [];
-    let currentStatus = 'idle';
-    let emailConfigured = false;
-    let browserConnected = false;
-
-    // Tab switching
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        const tabId = tab.dataset.tab;
-        switchTab(tabId);
+    // Tab Navigation
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const tab = item.dataset.tab;
+        switchTab(tab);
       });
     });
 
-    function switchTab(tabId) {
-      // Update tabs
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.querySelector(`.tab[data-tab="${tabId}"]`).classList.add('active');
-
-      // Update content
+    function switchTab(tab) {
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      document.getElementById(`tab-${tabId}`).classList.add('active');
-
-      // Show/hide iframe container for agent tab
-      if (tabId === 'agent') {
-        document.getElementById('agentIframeContainer').style.display = 'block';
-      } else {
-        document.getElementById('agentIframeContainer').style.display = 'none';
-      }
-
-      // Refresh data if needed
-      if (tabId === 'email') loadEmailConfig();
-      if (tabId === 'browser') updateBrowserState();
+      document.getElementById(`tab-${tab}`).classList.add('active');
+      
+      const titles = {
+        dashboard: 'Dashboard',
+        reports: 'Report Generator',
+        email: 'Email Module',
+        browser: 'Browser Control',
+        agent: 'Agent Console'
+      };
+      document.getElementById('page-title').textContent = titles[tab] || 'Dashboard';
     }
 
-    // Health check
-    async function checkHealth() {
+    // Refresh Status
+    async function refreshStatus() {
       try {
         const res = await fetch('/api/health');
         const data = await res.json();
-
-        // Update status cards
-        const agentStatus = document.getElementById('status-agent');
-        agentStatus.textContent = data.modules.agentConsole.status === 'available' ? 'Available' : 'Unavailable';
-        agentStatus.className = 'status ' + (data.modules.agentConsole.status === 'available' ? 'online' : 'offline');
-
-        const reportsStatus = document.getElementById('status-reports');
-        reportsStatus.textContent = data.modules.reportCenter.status;
-        reportsStatus.className = 'status ready';
-
-        const emailStatus = document.getElementById('status-email');
-        emailConfigured = data.modules.emailModule.status === 'configured';
-        emailStatus.textContent = data.modules.emailModule.status === 'configured' ? 'Configured' : 'Not Configured';
-        emailStatus.className = 'status ' + (emailConfigured ? 'online' : 'offline');
-
-        const browserStatus = document.getElementById('status-browser');
-        browserConnected = data.modules.browserModule.status === 'connected';
-        browserStatus.textContent = data.modules.browserModule.status === 'connected' ? 'Connected' : 'Disconnected';
-        browserStatus.className = 'status ' + (browserConnected ? 'online' : 'offline');
+        
+        document.getElementById('status-agent').textContent = 
+          data.modules.agentConsole.status === 'available' ? 'Available' : 'Offline';
+        document.getElementById('status-agent').className = 
+          data.modules.agentConsole.status === 'available' ? 'online' : 'offline';
+        
+        document.getElementById('status-reports').textContent = data.modules.reportCenter.status;
+        
+        const emailStatus = data.modules.emailModule.status;
+        document.getElementById('status-email').textContent = 
+          emailStatus === 'configured' ? 'Configured' : 'Not Configured';
+        document.getElementById('status-email').className = 
+          emailStatus === 'configured' ? 'online' : 'offline';
+        
+        const browserStatus = data.modules.browserModule.status;
+        document.getElementById('status-browser').textContent = 
+          browserStatus === 'connected' ? 'Connected' : 'Disconnected';
+        document.getElementById('status-browser').className = 
+          browserStatus === 'connected' ? 'online' : 'offline';
       } catch (e) {
-        console.error('Health check failed:', e);
+        console.error('Failed to refresh status:', e);
       }
     }
 
-    // ==================== Report Functions ====================
-
-    async function loadWorkflows() {
-      try {
-        const response = await fetch('/api/workflows');
-        const workflows = await response.json();
-        const select = document.getElementById('workflowTemplate');
-        workflows.forEach(w => {
-          const option = document.createElement('option');
-          option.value = w.id;
-          option.textContent = w.name;
-          select.appendChild(option);
-        });
-      } catch (e) {
-        console.error('Failed to load workflows:', e);
-      }
-    }
-
-    async function loadLogs() {
-      try {
-        const response = await fetch('/api/logs');
-        const data = await response.json();
-        logs = data.logs || [];
-        currentStatus = data.status || 'idle';
-        renderLogs();
-        updateStatus();
-        renderDashboardLogs();
-      } catch (e) {
-        console.error('Failed to load logs:', e);
-      }
-    }
-
-    function renderLogs() {
-      const container = document.getElementById('logsContainer');
-      if (logs.length === 0) {
-        container.innerHTML = '<div class="empty-state"><div class="icon">📋</div><div>No logs yet. Run a report to see activity.</div></div>';
-        return;
-      }
-
-      container.innerHTML = logs.map(log => {
-        const time = new Date(log.timestamp).toLocaleTimeString();
-        return '<div class="log-entry ' + log.type + '"><div class="time">' + time + '</div><div class="message">' + log.message + '</div></div>';
-      }).join('');
-    }
-
-    function renderDashboardLogs() {
-      const container = document.getElementById('dashboard-logs');
-      if (logs.length === 0) {
-        container.innerHTML = '<div class="empty-state"><div class="icon">📋</div><div>No recent activity</div></div>';
-        return;
-      }
-
-      const recentLogs = logs.slice(-5).reverse();
-      container.innerHTML = recentLogs.map(log => {
-        const time = new Date(log.timestamp).toLocaleTimeString();
-        return '<div class="log-entry ' + log.type + '"><div class="time">' + time + '</div><div class="message">' + log.message + '</div></div>';
-      }).join('');
-    }
-
-    function updateStatus() {
-      const indicator = document.getElementById('statusIndicator');
-      const text = document.getElementById('statusText');
-      const btn = document.getElementById('runBtn');
-
-      indicator.className = 'status-indicator ' + currentStatus;
-      text.textContent = currentStatus === 'running' ? 'Running...' : (currentStatus === 'completed' ? 'Completed' : (currentStatus === 'error' ? 'Error' : 'Ready'));
-      btn.disabled = currentStatus === 'running';
-    }
-
-    async function runReport() {
-      if (isRunning) return;
-
-      const title = document.getElementById('reportTitle').value || 'My Report';
-      const style = document.querySelector('input[name="style"]:checked')?.value || 'finance';
-
-      const formatCheckboxes = document.querySelectorAll('.format-toggle input:checked');
-      const outputs = Array.from(formatCheckboxes).map(cb => cb.value);
+    // Generate Report
+    async function generateReport() {
+      const title = document.getElementById('report-title').value || 'Report';
+      const style = document.querySelector('input[name="style"]:checked').value;
+      const outputs = Array.from(document.querySelectorAll('.format-toggle input:checked')).map(i => i.value);
+      const workflow = document.getElementById('report-workflow').value;
 
       if (outputs.length === 0) {
         alert('Please select at least one output format');
         return;
       }
 
-      isRunning = true;
-      document.getElementById('resultsSection').style.display = 'none';
+      const statusEl = document.getElementById('report-status');
+      statusEl.innerHTML = '<div class="empty-state"><div class="icon">⏳</div><div>Generating report...</div></div>';
 
       try {
-        const response = await fetch('/api/generate', {
+        // Use safe endpoint for better JSON handling
+        const res = await fetch('/api/generate-safe', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title, style, outputs })
+          body: JSON.stringify({ title, style, outputs, workflow })
         });
+        
+        const data = await res.json();
+        
+        // Update logs
+        const logsEl = document.getElementById('report-logs');
+        logsEl.innerHTML = data.logs?.map(l => 
+          `<div class="log-entry ${l.type}"><span class="log-time">${new Date(l.timestamp).toLocaleTimeString()}</span>${l.message}</div>`
+        ).join('') || '';
 
-        const result = await response.json();
-        await loadLogs();
-
-        if (result.success && result.results) {
-          const resultsSection = document.getElementById('resultsSection');
-          const resultsList = document.getElementById('resultsList');
-
-          let resultsHtml = '';
-          if (result.results.html) {
-            const filename = result.results.html.split('/').pop();
-            resultsHtml += '<div class="result-item"><span>📄</span><a href="/reports/' + filename + '" target="_blank">' + filename + '</a></div>';
+        // Update status
+        const statusBadge = document.getElementById('run-status');
+        if (data.success) {
+          statusBadge.className = 'status-badge completed';
+          statusBadge.innerHTML = '<span class="status-dot"></span> Completed';
+          
+          // Show results
+          let resultsHtml = '<div class="results-list">';
+          if (data.results) {
+            if (data.results.html) {
+              resultsHtml += `<div class="result-item">📄 <a href="/${data.results.html}" target="_blank">View HTML Report</a></div>`;
+            }
+            if (data.results.pdf) {
+              resultsHtml += `<div class="result-item">📕 <a href="/${data.results.pdf}" target="_blank">View PDF Report</a></div>`;
+            }
+            if (data.results.ppt) {
+              resultsHtml += `<div class="result-item">📊 <a href="/${data.results.ppt}" target="_blank">View PowerPoint</a></div>`;
+            }
           }
-          if (result.results.pdf) {
-            const filename = result.results.pdf.split('/').pop();
-            resultsHtml += '<div class="result-item"><span>📕</span><a href="/reports/pdf/' + filename + '" target="_blank">' + filename + '</a></div>';
-          }
-          if (result.results.ppt) {
-            const filename = result.results.ppt.split('/').pop();
-            resultsHtml += '<div class="result-item"><span>📊</span><a href="/reports/ppt/' + filename + '" target="_blank">' + filename + '</a></div>';
-          }
-
-          resultsList.innerHTML = resultsHtml;
-          resultsSection.style.display = 'block';
+          resultsHtml += '</div>';
+          statusEl.innerHTML = resultsHtml;
+        } else {
+          statusBadge.className = 'status-badge error';
+          statusBadge.innerHTML = '<span class="status-dot"></span> Failed';
+          statusEl.innerHTML = `<div class="empty-state"><div class="icon">❌</div><div>${data.message || 'Generation failed'}</div></div>`;
         }
       } catch (e) {
-        console.error('Error:', e);
-        alert('Failed to generate report: ' + e.message);
-      } finally {
-        isRunning = false;
-        await loadLogs();
+        console.error('Report generation error:', e);
+        statusEl.innerHTML = `<div class="empty-state"><div class="icon">❌</div><div>Error: ${e.message}</div></div>`;
       }
+
+      // Update dashboard logs too
+      updateDashboardLogs();
     }
 
+    // Clear Logs
     async function clearLogs() {
-      try {
-        await fetch('/api/logs/clear', { method: 'POST' });
-        logs = [];
-        currentStatus = 'idle';
-        renderLogs();
-        updateStatus();
-      } catch (e) {
-        console.error('Failed to clear logs:', e);
-      }
+      await fetch('/api/logs/clear', { method: 'POST' });
+      document.getElementById('report-logs').innerHTML = '';
+      document.getElementById('dashboard-logs').innerHTML = '<div class="empty-state"><div class="icon">📋</div><div>No recent activity</div></div>';
+      document.getElementById('run-status').className = 'status-badge idle';
+      document.getElementById('run-status').innerHTML = '<span class="status-dot"></span> Idle';
     }
 
-    // ==================== Email Functions ====================
-
-    async function loadEmailConfig() {
+    // Update Dashboard Logs
+    async function updateDashboardLogs() {
       try {
-        const res = await fetch('/api/email/config');
+        const res = await fetch('/api/logs');
         const data = await res.json();
+        
+        if (data.logs && data.logs.length > 0) {
+          const logsEl = document.getElementById('dashboard-logs');
+          logsEl.innerHTML = data.logs.map(l => 
+            `<div class="log-entry ${l.type}"><span class="log-time">${new Date(l.timestamp).toLocaleTimeString()}</span>${l.message}</div>`
+          ).join('');
+        }
 
-        document.getElementById('emailHost').value = data.host || '';
-        document.getElementById('emailPort').value = data.port || 993;
-        document.getElementById('emailUser').value = data.user || '';
-        document.getElementById('emailSecured').checked = data.secured || false;
-
-        emailConfigured = data.configured;
-        const status = document.getElementById('status-email');
-        status.textContent = emailConfigured ? 'Configured' : 'Not Configured';
-        status.className = 'status ' + (emailConfigured ? 'online' : 'offline');
+        const statusBadge = document.getElementById('run-status');
+        statusBadge.className = `status-badge ${data.status}`;
+        const statusText = { idle: 'Idle', running: 'Running', completed: 'Completed', error: 'Error' };
+        statusBadge.innerHTML = `<span class="status-dot"></span> ${statusText[data.status] || 'Idle'}`;
       } catch (e) {
-        console.error('Failed to load email config:', e);
+        console.error('Failed to update logs:', e);
       }
     }
 
+    // Email Functions
     async function saveEmailConfig() {
       const config = {
-        host: document.getElementById('emailHost').value,
-        port: parseInt(document.getElementById('emailPort').value),
-        user: document.getElementById('emailUser').value,
-        password: document.getElementById('emailPassword').value,
-        secured: document.getElementById('emailSecured').checked
+        host: document.getElementById('email-host').value,
+        port: parseInt(document.getElementById('email-port').value),
+        user: document.getElementById('email-user').value,
+        password: document.getElementById('email-password').value
       };
 
       try {
@@ -1200,42 +1073,23 @@
         });
         const data = await res.json();
         alert(data.message);
-        loadEmailConfig();
+        
+        document.getElementById('status-email').textContent = 'Configured';
+        document.getElementById('status-email').className = 'online';
       } catch (e) {
-        console.error('Failed to save email config:', e);
-        alert('Failed to save configuration');
-      }
-    }
-
-    async function loadInbox() {
-      try {
-        const res = await fetch('/api/email/inbox');
-        const data = await res.json();
-
-        const list = document.getElementById('emailList');
-        if (data.messages.length === 0) {
-          list.innerHTML = '<div class="empty-state"><div class="icon">📭</div><div>No messages in inbox</div></div>';
-          return;
-        }
-
-        list.innerHTML = data.messages.map(msg => `
-          <div class="email-item ${msg.read ? '' : 'unread'}">
-            <div class="subject">${msg.subject}</div>
-            <div class="meta">From: ${msg.from} | ${new Date(msg.date).toLocaleString()}</div>
-          </div>
-        `).join('');
-      } catch (e) {
-        console.error('Failed to load inbox:', e);
+        alert('Error saving config: ' + e.message);
       }
     }
 
     async function sendEmail() {
-      const to = document.getElementById('emailTo').value;
-      const subject = document.getElementById('emailSubject').value;
-      const body = document.getElementById('emailBody').value;
+      const email = {
+        to: document.getElementById('email-to').value,
+        subject: document.getElementById('email-subject').value,
+        body: document.getElementById('email-body').value
+      };
 
-      if (!to || !subject || !body) {
-        alert('Please fill in all fields');
+      if (!email.to || !email.subject) {
+        alert('Please fill in recipient and subject');
         return;
       }
 
@@ -1243,50 +1097,39 @@
         const res = await fetch('/api/email/send', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ to, subject, body })
+          body: JSON.stringify(email)
         });
         const data = await res.json();
         alert(data.message);
-
-        // Clear form
-        document.getElementById('emailTo').value = '';
-        document.getElementById('emailSubject').value = '';
-        document.getElementById('emailBody').value = '';
       } catch (e) {
-        console.error('Failed to send email:', e);
-        alert('Failed to send email');
+        alert('Error sending email: ' + e.message);
       }
     }
 
-    // ==================== Browser Functions ====================
-
-    async function updateBrowserState() {
+    async function loadInbox() {
       try {
-        const res = await fetch('/api/browser/state');
+        const res = await fetch('/api/email/inbox');
         const data = await res.json();
-
-        browserConnected = data.isConnected;
-        const indicator = document.getElementById('browserStatusIndicator');
-        indicator.className = 'status-indicator ' + (browserConnected ? 'completed' : 'idle');
-        indicator.querySelector('span:last-child').textContent = browserConnected ? 'Connected' : 'Disconnected';
-
-        document.getElementById('currentUrl').textContent = data.currentUrl || 'None';
-        document.getElementById('lastScreenshot').textContent = data.lastScreenshot || 'None';
-
-        const status = document.getElementById('status-browser');
-        status.textContent = browserConnected ? 'Connected' : 'Disconnected';
-        status.className = 'status ' + (browserConnected ? 'online' : 'offline');
+        
+        if (data.messages && data.messages.length > 0) {
+          const inboxEl = document.getElementById('email-inbox');
+          inboxEl.innerHTML = data.messages.map(m => `
+            <div class="email-item ${m.read ? '' : 'unread'}">
+              <div class="email-from">${m.from}</div>
+              <div class="email-subject">${m.subject}</div>
+              <div class="email-date">${new Date(m.date).toLocaleDateString()}</div>
+            </div>
+          `).join('');
+        }
       } catch (e) {
-        console.error('Failed to get browser state:', e);
+        console.error('Failed to load inbox:', e);
       }
     }
 
+    // Browser Functions
     async function openUrl() {
-      const url = document.getElementById('browserUrl').value;
-      if (!url) {
-        alert('Please enter a URL');
-        return;
-      }
+      const url = document.getElementById('browser-url').value;
+      if (!url) { alert('Please enter a URL'); return; }
 
       try {
         const res = await fetch('/api/browser/open', {
@@ -1296,115 +1139,82 @@
         });
         const data = await res.json();
         alert(data.message);
-        updateBrowserState();
+        
+        document.getElementById('browser-status-badge').className = 'status-badge running';
+        document.getElementById('browser-status-badge').innerHTML = '<span class="status-dot"></span> Connected';
       } catch (e) {
-        console.error('Failed to open URL:', e);
-        alert('Failed to open URL');
+        alert('Error: ' + e.message);
       }
     }
 
-    async function browserClick() {
-      const selector = prompt('Enter CSS selector (or leave empty for coordinates):');
-      const x = prompt('X coordinate (optional):');
-      const y = prompt('Y coordinate (optional):');
-
+    async function takeScreenshot() {
       try {
-        const res = await fetch('/api/browser/click', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            selector: selector || null,
-            x: x ? parseInt(x) : null,
-            y: y ? parseInt(y) : null
-          })
-        });
+        const res = await fetch('/api/browser/screenshot', { method: 'POST' });
         const data = await res.json();
         alert(data.message);
       } catch (e) {
-        alert('Failed to click');
+        alert('Error: ' + e.message);
       }
     }
 
-    async function browserFill() {
-      const selector = prompt('Enter CSS selector:');
-      const value = prompt('Enter value:');
-
-      if (!selector || !value) {
-        alert('Selector and value are required');
-        return;
-      }
-
+    async function scrollPage(direction) {
       try {
-        const res = await fetch('/api/browser/fill', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ selector, value })
-        });
-        const data = await res.json();
-        alert(data.message);
-      } catch (e) {
-        alert('Failed to fill field');
-      }
-    }
-
-    async function browserScroll() {
-      const direction = prompt('Enter direction (up, down, top, bottom) or coordinates (x,y):');
-
-      try {
-        const res = await fetch('/api/browser/scroll', {
+        await fetch('/api/browser/scroll', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ direction })
         });
-        const data = await res.json();
-        alert(data.message);
       } catch (e) {
-        alert('Failed to scroll');
+        alert('Error: ' + e.message);
       }
     }
 
-    async function browserScreenshot() {
+    async function clickElement() {
+      const selector = document.getElementById('click-selector').value;
+      if (!selector) { alert('Please enter a CSS selector'); return; }
+
       try {
-        const res = await fetch('/api/browser/screenshot', {
+        await fetch('/api/browser/click', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ fullPage: false })
+          body: JSON.stringify({ selector })
         });
-        const data = await res.json();
-        alert(data.message + '\nScreenshot: ' + data.screenshot);
-        updateBrowserState();
       } catch (e) {
-        alert('Failed to take screenshot');
+        alert('Error: ' + e.message);
       }
     }
 
-    async function browserGoBack() {
-      alert('Go back action - navigate to previous URL in history');
-      updateBrowserState();
+    async function fillField() {
+      const selector = document.getElementById('fill-selector').value;
+      const value = document.getElementById('fill-value').value;
+      if (!selector || !value) { alert('Please enter selector and value'); return; }
+
+      try {
+        await fetch('/api/browser/fill', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ selector, value })
+        });
+      } catch (e) {
+        alert('Error: ' + e.message);
+      }
     }
 
-    async function browserClose() {
+    async function closeBrowser() {
       try {
-        const res = await fetch('/api/browser/close', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' }
-        });
-        const data = await res.json();
-        alert(data.message);
-        updateBrowserState();
+        await fetch('/api/browser/close', { method: 'POST' });
+        document.getElementById('browser-status-badge').className = 'status-badge idle';
+        document.getElementById('browser-status-badge').innerHTML = '<span class="status-dot"></span> Disconnected';
       } catch (e) {
-        alert('Failed to close browser');
+        alert('Error: ' + e.message);
       }
     }
 
     // Initialize
-    loadWorkflows();
-    loadLogs();
-    checkHealth();
-
-    // Poll for updates
-    setInterval(loadLogs, 3000);
-    setInterval(checkHealth, 10000);
-  </script>
+    setInterval(ref    refreshStatus();
+reshStatus, 30000);
+    loadInbox();
+     </script>
+ updateDashboardLogs();
 </body>
 </html>

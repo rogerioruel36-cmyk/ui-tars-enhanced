@@ -26,7 +26,15 @@
     "exclude": [
       "web_search",
       "browser_get_markdown"
-    ]
+    ],
+    "retryOnFailure": true,
+    "maxRetries": 3,
+    "jsonValidation": {
+      "strict": false,
+      "coerceDefaults": true,
+      "fallbackToSafeAPI": true
+    }
   },
-  "instructions": "Browser strategy: use the right tool for each task.\n\n[Text/Data tasks] Use agent-browser CLI (/opt/homebrew/bin/agent-browser) via shell — much cheaper on tokens:\n- agent-browser open <url>\n- agent-browser snapshot  (returns accessibility tree with @refs)\n- agent-browser click @ref / agent-browser fill @ref \"text\"\n- agent-browser get text @ref\nUse this for: news scraping, article extraction, search, forms, any text-based page.\n\n[Image downloading] To save article images: use agent-browser eval \"JSON.stringify([...document.querySelectorAll('article img, .content img')].map(i=>i.src))\" to extract image URLs, then download with curl -o workspace/images/<filename> <url>. Always save images alongside the markdown report.\n\n[Visual tasks] Use built-in browser tools (browser_navigate, browser_click, browser_screenshot) via CDP (http://127.0.0.1:18888):\nUse this for: games, canvas, charts, captcha, anything requiring visual understanding.\n\nDo not use web_search or browser_get_markdown."
+  "instructions": "Browser strategy: use the right tool for each task.\n\n[Text/Data tasks] Use agent-browser CLI (/opt/homebrew/bin/agent-browser) via shell \u2014 much cheaper on tokens:\n- agent-browser open <url>\n- agent-browser snapshot  (returns accessibility tree with @refs)\n- agent-browser click @ref / agent-browser fill @ref \"text\"\n- agent-browser get text @ref\nUse this for: news scraping, article extraction, search, forms, any text-based page.\n\n[Image downloading] To save article images: use agent-browser eval \"JSON.stringify([...document.querySelectorAll('article img, .content img')].map(i=>i.src))\" to extract image URLs, then download with curl -o workspace/images/<filename> <url>. Always save images alongside the markdown report.\n\n[Visual tasks] Use built-in browser tools (browser_navigate, browser_click, browser_screenshot) via CDP (http://127.0.0.1:18888):\nUse this for: games, canvas, charts, captcha, anything requiring visual understanding.\n\nDo not use web_search or browser_get_markdown.",
+  "toolCallEngine": "structured_outputs"
 }
