@@ -1,9 +1,11 @@
 /**
  * Workflow Engine Core
  * Implements template parser, executor, and version manager
+ * Includes performance optimization: caching, parallel execution, incremental updates
  */
 const fs = require('fs');
 const path = require('path');
+const { PerformanceOptimizer, createPerformanceOptimizer } = require('../utils/PerformanceOptimizer');
 
 class WorkflowEngine {
   constructor(options = {}) {
@@ -13,8 +15,22 @@ class WorkflowEngine {
     this.config = {
       defaultTimeout: options.defaultTimeout || 30000,
       defaultRetry: options.defaultRetry || 3,
+      enableParallel: options.enableParallel !== false,
+      enableIncremental: options.enableIncremental !== false,
+      enableCache: options.enableCache !== false,
+      parallelConcurrency: options.parallelConcurrency || 5,
       ...options
     };
+
+    // Initialize performance optimizer
+    this.perf = createPerformanceOptimizer({
+      enableCache: this.config.enableCache,
+      enableParallel: this.config.enableParallel,
+      enableIncremental: this.config.enableIncremental
+    });
+
+    // Cache for template hashes
+    this.parallelConcurrency = options.parallelConcurrency || 5;
   }
 
   registerDefaultActions() {
@@ -78,9 +94,21 @@ class WorkflowEngine {
       return { success: true, x, y };
     });
 
-    // HTTP action
+    // HTTP action with caching support
     this.registerAction('http', async (params, context) => {
-      const { method = 'GET', url, headers = {}, body } = params;
+      const { method = 'GET', url, headers = {}, body, cache = false, cacheTTL = 300000 } = params;
+      const perf = params.perf || context.perf;
+
+      // Check cache for GET requests
+      if (cache && method === 'GET' && perf) {
+        const cacheKey = `http:${url}`;
+        const cached = perf.get(cacheKey);
+        if (cached) {
+          console.log(`[HTTP] Cache hit for: ${url}`);
+          return { ...cached, _cached: true };
+        }
+      }
+
       const fetchModule = require('node-fetch') || global.fetch;
       const response = await fetchModule(url, { method, headers, body: body ? JSON.stringify(body) : undefined });
       const contentType = response.headers.get('content-type');
@@ -90,7 +118,15 @@ class WorkflowEngine {
       } else {
         data = await response.text();
       }
-      return { status: response.status, data };
+
+      const result = { status: response.status, data };
+
+      // Cache the result
+      if (cache && method === 'GET' && perf) {
+        perf.set(`http:${url}`, result, cacheTTL);
+      }
+
+      return result;
     });
 
     // Skill invocation action
@@ -161,12 +197,46 @@ class WorkflowEngine {
     const config = parsed.config || {};
 
     try {
-      // Execute stages in order
-      for (const stage of parsed.stages) {
+      // Check if parallel execution is enabled
+      const parallelStages = parsed.stages.filter(s => s.parallel && this.config.enableParallel);
+      const sequentialStages = parsed.stages.filter(s => !s.parallel || !this.config.enableParallel);
+
+      // Execute parallel stages
+      if (parallelStages.length > 0) {
+        const parallelResults = await this._executeParallelStages(parallelStages, executionContext);
+        Object.assign(executionContext.results, parallelResults);
+      }
+
+      // Execute sequential stages
+      for (const stage of sequentialStages) {
         if (!this.shouldExecute(stage, executionContext)) continue;
+
+        // Check for incremental execution
+        if (this.config.enableIncremental && stage.hash) {
+          const { changed } = await this.perf.checkIncremental(
+            `stage:${stage.id}`,
+            stage.actions,
+            { storePath: path.join(process.cwd(), 'workspace', 'cache') }
+          );
+          if (!changed) {
+            console.log(`[Workflow] Skipping unchanged stage: ${stage.id}`);
+            executionContext.results[stage.id] = { _skipped: true, reason: 'incremental_skip' };
+            continue;
+          }
+        }
 
         try {
           const stageResult = await this.executeStage(stage, executionContext);
+
+          // Save hash for incremental execution
+          if (this.config.enableIncremental && stage.hash) {
+            await this.perf.saveHash(
+              `stage:${stage.id}`,
+              this.perf.computeHash(stage.actions),
+              path.join(process.cwd(), 'workspace', 'cache')
+            );
+          }
+
           executionContext.results[stage.id] = stageResult;
 
           if (stage.onSuccess?.action === 'stop') break;
@@ -184,10 +254,54 @@ class WorkflowEngine {
         }
       }
 
-      return { success: true, results: executionContext.results, errors: executionContext.errors };
+      return {
+        success: true,
+        results: executionContext.results,
+        errors: executionContext.errors,
+        metrics: this.perf.getMetrics()
+      };
     } catch (error) {
-      return { success: false, error: error.message, results: executionContext.results, errors: executionContext.errors };
+      return {
+        success: false,
+        error: error.message,
+        results: executionContext.results,
+        errors: executionContext.errors,
+        metrics: this.perf.getMetrics()
+      };
     }
+  }
+
+  /**
+   * Execute multiple stages in parallel
+   */
+  async _executeParallelStages(stages, context) {
+    const tasks = stages
+      .filter(stage => this.shouldExecute(stage, context))
+      .map(stage => async () => {
+        const stageContext = { ...context, results: {} };
+        return await this.executeStage(stage, stageContext);
+      });
+
+    const { results, errors } = await this.perf.parallelExec(tasks, {
+      concurrency: this.parallelConcurrency
+    });
+
+    const executionResults = {};
+    const stageIds = stages.map(s => s.id);
+
+    results.forEach((r, i) => {
+      if (stageIds[i]) {
+        executionResults[stageIds[i]] = r.result;
+      }
+    });
+
+    errors.forEach((e, i) => {
+      if (stageIds[e.index]) {
+        executionResults[stageIds[e.index]] = { error: e.error };
+      }
+    });
+
+    return executionResults;
   }
 
   shouldExecute(stage, context) {
@@ -262,13 +376,24 @@ class WorkflowEngine {
       throw new Error(`Unknown action type: ${action.type}`);
     }
 
+    // Check action-level cache
+    const cacheKey = action.cacheKey || (action.cache && this._getActionCacheKey(action));
+    if (action.cache && cacheKey) {
+      const cached = this.perf.get(cacheKey);
+      if (cached) {
+        console.log(`[Workflow] Cache hit for action: ${action.id}`);
+        return { ...cached, _cached: true };
+      }
+    }
+
     // Merge context with action params
     const params = {
       ...action.params,
       ...(action.selector && { selector: action.selector }),
       browser: context.browser,
       page: context.page,
-      variables: context.variables
+      variables: context.variables,
+      perf: this.perf // Pass perf optimizer to actions
     };
 
     const timeout = action.timeout || this.config.defaultTimeout;
@@ -277,7 +402,14 @@ class WorkflowEngine {
     let lastError;
     for (let attempt = 0; attempt <= retry; attempt++) {
       try {
-        return await this.executeWithTimeout(handler, params, context, timeout);
+        const result = await this.executeWithTimeout(handler, params, context, timeout);
+
+        // Cache the result
+        if (action.cache && cacheKey) {
+          this.perf.set(cacheKey, result, action.cacheTTL || 300000); // 5 min default
+        }
+
+        return result;
       } catch (error) {
         lastError = error;
         if (attempt < retry) {
@@ -287,6 +419,15 @@ class WorkflowEngine {
     }
 
     throw lastError;
+  }
+
+  /**
+   * Generate cache key for action
+   */
+  _getActionCacheKey(action) {
+    const { type, params } = action;
+    const keyData = `${type}:${JSON.stringify(params || {})}`;
+    return this.perf.computeHash(keyData);
   }
 
   async executeWithTimeout(handler, params, context, timeout) {
